@@ -39,13 +39,7 @@ export function GameBannersCarousel({ games }: GameBannersCarouselProps) {
         <CarouselContent>
           {games.map(game => (
             <CarouselItem key={game.id}>
-              <GameBanner
-                imageUrl={game.imageUrl}
-                title={game.title}
-                description={game.description}
-                price={game.price}
-                platformsAvaliable={game.platformsAvaliable}
-              />
+              <GameBanner game={game} />
             </CarouselItem>
           ))}
         </CarouselContent>
