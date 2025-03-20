@@ -1,6 +1,6 @@
 import { GameBannersCarousel } from '@/components/game-banners-carousel'
 import { GameVerticalCard } from '@/components/game-vertical-card'
-import { Logo } from '@/components/icons/logo'
+import { Logo } from '@/components/logo'
 import { Sidebar } from '@/components/sidebar'
 import { TopicsFilterTags } from '@/components/topics-filter-tags'
 import { FlameIcon } from 'lucide-react'
@@ -8,9 +8,8 @@ import { FlameIcon } from 'lucide-react'
 export default function Home() {
   return (
     <div className="size-full flex flex-col bg-background text-foreground">
-      <header className="flex items-center justify-between h-16">
-        <Logo className="ml-2 h-auto w-40" />
-
+      <header className="flex items-center justify-between h-16 bg-zinc-950">
+        <Logo />
         <Sidebar />
       </header>
 
