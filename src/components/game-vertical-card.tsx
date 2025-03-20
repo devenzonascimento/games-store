@@ -6,7 +6,7 @@ type GameVerticalCardProps = {
 
 export function GameVerticalCard({ game }: GameVerticalCardProps) {
   return (
-    <div className="w-full min-w-[150px] flex flex-col gap-2">
+    <div className="w-full min-w-[150px] flex flex-col gap-2 active:scale-105 transition-transform duration-300 delay-200">
       <div className="aspect-[3/4] overflow-hidden rounded-xl">
         <img
           src={game.imageUrl}
