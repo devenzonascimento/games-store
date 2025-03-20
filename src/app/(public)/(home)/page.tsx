@@ -2,26 +2,20 @@ import { GameBannersCarousel } from '@/components/game-banners-carousel'
 import { GameVerticalCard } from '@/components/game-vertical-card'
 import { Logo } from '@/components/icons/logo'
 import { Sidebar } from '@/components/sidebar'
-import { Tag } from '@/components/tag'
-import {
-  CalendarIcon,
-  FlameIcon,
-  SearchIcon,
-  SparklesIcon,
-  TrophyIcon,
-} from 'lucide-react'
+import { TopicsFilterTags } from '@/components/topics-filter-tags'
+import { FlameIcon } from 'lucide-react'
 
 export default function Home() {
   return (
     <div className="size-full flex flex-col bg-background text-foreground">
-      <header className="flex items-center justify-between h-12">
+      <header className="flex items-center justify-between h-16">
         <Logo className="ml-2 h-auto w-40" />
 
         <Sidebar />
       </header>
 
       <main className="flex-1 bg-zinc-900 overflow-y-auto">
-        <section className="p-4">
+        {/* <section className="p-4">
           <div className="p-2 flex items-center gap-2 bg-zinc-800 border border-zinc-600 rounded-xl">
             <SearchIcon />
             <input
@@ -30,7 +24,7 @@ export default function Home() {
               className="flex-1 bg-transparent text-base text-white placeholder:text-zinc-500 outline-none"
             />
           </div>
-        </section>
+        </section> */}
 
         <section className="w-full py-2 px-4 flex flex-col gap-2">
           <div className="flex items-center gap-2">
@@ -40,13 +34,11 @@ export default function Home() {
           <GameBannersCarousel games={mockGameBanners} />
         </section>
 
-        <section className="w-full py-2 px-4 grid grid-flow-col gap-2 overflow-x-auto no-scrollbar">
-          <Tag title="Vencedor" Icon={TrophyIcon} isActive />
-          <Tag title="Mais vendidos na semana" Icon={CalendarIcon} />
-          <Tag title="Novidades" Icon={SparklesIcon} />
+        <section className="w-full py-2 px-0">
+          <TopicsFilterTags />
         </section>
 
-        <section className="w-full py-2 px-4 grid grid-cols-2 gap-4 overflow-y-auto">
+        <section className="mb-4 w-full py-2 px-4 grid grid-cols-2 gap-4">
           {mockGameCards.map(game => (
             <GameVerticalCard key={game.id} game={game} />
           ))}
