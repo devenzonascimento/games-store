@@ -3,7 +3,7 @@ import { GameBannersCarousel } from '@/components/game-banners-carousel'
 import { GameVerticalCard } from '@/components/game-vertical-card'
 import { TopicsFilterTags } from '@/components/topics-filter-tags'
 
-export default function Home() {
+export default function HomePage() {
   return (
     <main className="mb-16 flex-1 bg-zinc-900">
       {/* <section className="p-4">
@@ -38,7 +38,7 @@ export default function Home() {
   )
 }
 
-const mockGameBanners = [
+export const mockGameBanners = [
   {
     id: 1,
     imageUrl: '/forza-horizon-5-banner.png',
@@ -86,7 +86,7 @@ const mockGameBanners = [
   },
 ]
 
-const mockGameCards = [
+export const mockGameCards = [
   {
     id: 1,
     imageUrl: '/gta-6.png',

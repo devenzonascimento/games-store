@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 
 type TagProps = {
   title: string
-  Icon: React.ElementType
+  Icon?: React.ElementType
   isActive?: boolean
   onClick?: () => void
 }
@@ -19,7 +19,7 @@ export function Tag({ title, Icon, isActive, onClick }: TagProps) {
       )}
       onClick={onClick}
     >
-      <Icon className="size-5 shrink-0" />
+      {Icon && <Icon className="size-5 shrink-0" />}      
       <span className="text-sm font-medium">{title}</span>
     </button>
   )
