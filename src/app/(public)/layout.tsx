@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import '../../globals.css'
+import '../globals.css'
+import { NavBar } from '@/components/nav-bar'
+import { Logo } from '@/components/logo'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -13,8 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark overflow-hidden">
-      <body className="relative h-[100dvh] w-screen antialiased overflow-hidden">
+      <body className="relative h-[100dvh] w-screen antialiased flex flex-col overflow-y-auto">
+        <header className="py-2 flex items-center justify-between h-16 bg-zinc-950">
+          <Logo />
+        </header>
         {children}
+        <NavBar />
       </body>
     </html>
   )
