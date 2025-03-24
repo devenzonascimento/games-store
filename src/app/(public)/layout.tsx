@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark overflow-hidden">
       <body className="relative h-[100dvh] w-screen antialiased flex flex-col overflow-y-auto">
-        <header className="py-2 flex items-center justify-between h-16 bg-zinc-950">
+        <header className="py-2 flex items-center justify-between min-h-16 bg-zinc-950">
           <Logo />
         </header>
         {children}

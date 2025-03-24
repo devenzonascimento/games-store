@@ -1,7 +1,10 @@
+'use client'
+
 import { PlayStationIcon } from '@/components/icons/playstation'
 import { XboxIcon } from '@/components/icons/xbox'
 import { Platform } from '@/types/game'
 import { MonitorIcon, SearchIcon } from 'lucide-react'
+import { useState } from 'react'
 
 export default function Catalog() {
   const renderPlatformIcon = (platform: Platform) => {
@@ -20,8 +23,10 @@ export default function Catalog() {
     }
   }
 
+  const [searchValue, setSearchValue] = useState('')
+
   return (
-    <main className="mb-16 flex-1 bg-zinc-900">
+    <main className="mb-16 flex-1 flex flex-col bg-zinc-900 overflow-hidden">
       <section className="p-4">
         <div className="p-2 flex items-center gap-2 bg-zinc-800 border border-zinc-600 rounded-xl">
           <SearchIcon />
@@ -29,32 +34,39 @@ export default function Catalog() {
             type="text"
             placeholder="Buscar..."
             className="flex-1 bg-transparent text-base text-white placeholder:text-zinc-500 outline-none"
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
           />
         </div>
       </section>
 
-      <section className="flex flex-col gap-2">
-        {mockGames.map(game => {
-          return (
-            <div key={game.id} className="px-4 grid grid-cols-[auto_1fr] gap-2">
-              <div className="h-24 aspect-[3/4] overflow-hidden rounded">
-                <img
-                  src={game.imageUrl}
-                  alt={game.title}
-                  className="size-full object-cover"
-                />
-              </div>
+      <section className="flex flex-col gap-2 p-4 overflow-y-auto">
+        {mockGames
+          .filter(g => (searchValue ? g.title.includes(searchValue) : true))
+          .map(game => {
+            return (
+              <div
+                key={game.id}
+                className="min-h-max grid grid-cols-[auto_1fr] bg-zinc-700 rounded-md overflow-hidden"
+              >
+                <div className="h-24 aspect-[3/4] overflow-hidden rounded">
+                  <img
+                    src={game.imageUrl}
+                    alt={game.title}
+                    className="size-full object-cover"
+                  />
+                </div>
 
-              <div className="py-1 flex flex-col">
-                <span className="text-base font-bold text-white">
-                  {game.title}
-                </span>
+                <div className="py-1 px-2 flex flex-col">
+                  <span className="text-base font-bold text-white">
+                    {game.title}
+                  </span>
 
-                <span className="text-sm font-medium text-zinc-300">
-                  {game.year} - {game.category}
-                </span>
+                  <span className="text-sm font-medium text-zinc-300">
+                    {game.year} - {game.category}
+                  </span>
 
-                {/* <div className="flex flex-wrap gap-1">
+                  {/* <div className="flex flex-wrap gap-1">
                   {game.tags.map(tag => (
                     <div
                       key={tag}
@@ -65,24 +77,22 @@ export default function Catalog() {
                   ))}
                 </div> */}
 
-                <div className='mt-auto flex justify-between items-end gap-2'>  
-                  <div className="self-end flex gap-1">
-                    {game.platformsAvaliable.map(renderPlatformIcon)}
+                  <div className="mt-auto flex justify-between items-end gap-2">
+                    <div className="self-end flex gap-1">
+                      {game.platformsAvaliable.map(renderPlatformIcon)}
+                    </div>
+                    <span className="min-w-max text-sm text-white font-semibold">
+                      {Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                        maximumFractionDigits: 2,
+                      }).format(game.price)}
+                    </span>
                   </div>
-                  <span className="min-w-max text-sm text-white font-semibold">
-                    {Intl.NumberFormat('pt-BR', {
-                      style: 'currency',
-                      currency: 'BRL',
-                      maximumFractionDigits: 2,
-                    }).format(game.price)}
-                  </span>
                 </div>
-
-                {/* <span>{game.tags.join(', ')}</span> */}
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
       </section>
     </main>
   )
