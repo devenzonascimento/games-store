@@ -2,6 +2,7 @@
 
 import { PlayStationIcon } from '@/components/icons/playstation'
 import { XboxIcon } from '@/components/icons/xbox'
+import { PlatformIcon } from '@/components/platform-icon'
 import { Platform } from '@/types/game'
 import { MonitorIcon, SearchIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -40,14 +41,14 @@ export default function Catalog() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-2 p-4 overflow-y-auto">
+      <section className="flex flex-col gap-3 p-4 overflow-y-auto">
         {mockGames
           .filter(g => (searchValue ? g.title.includes(searchValue) : true))
           .map(game => {
             return (
               <div
                 key={game.id}
-                className="min-h-max grid grid-cols-[auto_1fr] bg-zinc-700 rounded-md overflow-hidden"
+                className="min-h-max grid grid-cols-[auto_1fr] bg-zinc-800 rounded-md shadow-lg shadow-black"
               >
                 <div className="h-24 aspect-[3/4] overflow-hidden rounded">
                   <img
@@ -66,21 +67,17 @@ export default function Catalog() {
                     {game.year} - {game.category}
                   </span>
 
-                  {/* <div className="flex flex-wrap gap-1">
-                  {game.tags.map(tag => (
-                    <div
-                      key={tag}
-                      className="text-xs p-1 border border-zinc-600 rounded-md"
-                    >
-                      {tag}
-                    </div>
-                  ))}
-                </div> */}
-
                   <div className="mt-auto flex justify-between items-end gap-2">
                     <div className="self-end flex gap-1">
-                      {game.platformsAvaliable.map(renderPlatformIcon)}
+                      {game.platformsAvaliable.map(platform => (
+                        <PlatformIcon
+                          key={platform}
+                          platform={platform}
+                          className="size-4 text-white fill-white shrink-0"
+                        />
+                      ))}
                     </div>
+
                     <span className="min-w-max text-sm text-white font-semibold">
                       {Intl.NumberFormat('pt-BR', {
                         style: 'currency',
@@ -130,7 +127,7 @@ export const mockGames = [
     description:
       'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. The Premium Edition includes early access to the full game, allowing you to play four days early beginning November 5, 2021. Also included are the Welcome Pack, Car Pass, VIP Membership, and two game expansions when they become available.',
     price: 359.9,
-    platformsAvaliable: [2, 1],
+    platformsAvaliable: [0, 2, 1],
     year: 2025,
     category: 'Shooter',
     tags: ['Open World', 'Action', 'Adventure'],
