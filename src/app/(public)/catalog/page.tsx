@@ -1,29 +1,12 @@
 'use client'
 
-import { PlayStationIcon } from '@/components/icons/playstation'
-import { XboxIcon } from '@/components/icons/xbox'
-import { PlatformIcon } from '@/components/platform-icon'
-import { Platform } from '@/types/game'
-import { MonitorIcon, SearchIcon } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { SearchIcon } from 'lucide-react'
+import { PlatformIcon } from '@/components/platform-icon'
 
 export default function Catalog() {
-  const renderPlatformIcon = (platform: Platform) => {
-    switch (platform) {
-      case Platform.Pc:
-        return <MonitorIcon key="pc" className="size-4 text-white shrink-0" />
-      case Platform.PlayStation:
-        return (
-          <PlayStationIcon
-            key="playstation"
-            className="size-4 fill-white shrink-0"
-          />
-        )
-      case Platform.Xbox:
-        return <XboxIcon key="xbox" className="size-4 fill-white shrink-0" />
-    }
-  }
-
+  const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
 
   return (
@@ -49,6 +32,7 @@ export default function Catalog() {
               <div
                 key={game.id}
                 className="min-h-max grid grid-cols-[auto_1fr] bg-zinc-800 rounded-md shadow-lg shadow-black"
+                onClick={() => router.push(`/product/${game.id}`)}
               >
                 <div className="h-24 aspect-[3/4] overflow-hidden rounded">
                   <img
@@ -69,7 +53,7 @@ export default function Catalog() {
 
                   <div className="mt-auto flex justify-between items-end gap-2">
                     <div className="self-end flex gap-1">
-                      {game.platformsAvaliable.map(platform => (
+                      {game.platformsAvailable.map(platform => (
                         <PlatformIcon
                           key={platform}
                           platform={platform}
@@ -103,7 +87,7 @@ export const mockGames = [
     description:
       'Grand Theft Auto VI heads to the state of Leonida, home to the neon-soaked streets of Vice City and beyond in the biggest, most immersive evolution of the Grand Theft Auto series yet.',
     price: 359.9,
-    platformsAvaliable: [2, 1],
+    platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
     tags: ['Open World', 'Action', 'Adventure'],
@@ -115,7 +99,7 @@ export const mockGames = [
     description:
       'Horizon Forbidden West continues Aloy’s story as she moves west to a far-future America to brave a majestic, but dangerous frontier where she’ll face awe-inspiring machines and mysterious new threats.',
     price: 359.9,
-    platformsAvaliable: [2, 1],
+    platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
     tags: ['Open World', 'Action', 'Adventure'],
@@ -127,7 +111,7 @@ export const mockGames = [
     description:
       'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. The Premium Edition includes early access to the full game, allowing you to play four days early beginning November 5, 2021. Also included are the Welcome Pack, Car Pass, VIP Membership, and two game expansions when they become available.',
     price: 359.9,
-    platformsAvaliable: [0, 2, 1],
+    platformsAvailable: [0, 2, 1],
     year: 2025,
     category: 'Shooter',
     tags: ['Open World', 'Action', 'Adventure'],
@@ -138,7 +122,7 @@ export const mockGames = [
     title: 'Minecraft',
     description: `Minecraft focuses on allowing the player to explore, interact with, and modify a dynamically-generated map made of one-cubic-meter-sized blocks. In addition to blocks, the environment features plants, mobs, and items. Some activities in the game include mining for ore, fighting hostile mobs, and crafting new blocks and tools by gathering various resources found in the game. The game's open-ended model allows players to create structures, creations, and artwork on various multiplayer servers or their single-player maps. Other features include redstone circuits for logic computations and remote actions, minecarts and tracks, and a mysterious underworld called the Nether. A designated but completely optional goal of the game is to travel to a dimension called the End, and defeat the ender dragon.`,
     price: 359.9,
-    platformsAvaliable: [2, 1],
+    platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
     tags: ['Open World', 'Action', 'Adventure'],
@@ -150,7 +134,7 @@ export const mockGames = [
     description:
       'In this 3D open-world entry in the Zelda series, Link is awakened from a deep slumber without his past memories in the post-apocalyptic Kingdom of Hyrule, and sets off on a journey to defeat the ancient evil Calamity Ganon. Link treks, climbs and glides through fields, forests and mountain ranges while meeting and helping friendly folk and defeating enemies in order to gather up the strength to face Ganon.',
     price: 359.9,
-    platformsAvaliable: [2, 1],
+    platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
     tags: ['Open World', 'Action', 'Adventure'],
