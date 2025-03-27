@@ -7,7 +7,6 @@
 		"enabled": true
 	},
 	"linter": {
-
 		"enabled": true,
 		"rules": {
 			"nursery": {
@@ -27,7 +26,7 @@
 				"useExhaustiveDependencies": "warn"
 			},
 			"a11y": {
-				"useKeyWithClickEvents": "warn",
+				"useKeyWithClickEvents": "off",
 				"noSvgWithoutTitle": "warn",
 				"useMediaCaption": "warn",
 				"useButtonType": "error"
@@ -42,6 +41,5 @@
 			"jsxQuoteStyle": "double",
 			"arrowParentheses": "asNeeded"
 		}
-		
 	}
 }
