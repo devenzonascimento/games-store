@@ -9,6 +9,6 @@ export type Game = {
   title: string
   description: string
   price: number
-  platformsAvaliable: Platform[]
+  platformsAvailable: Platform[]
   imageUrl: string
 }

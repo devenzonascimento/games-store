@@ -1,36 +1,24 @@
-import { MonitorIcon } from 'lucide-react'
-import { PlayStationIcon } from './icons/playstation'
-import { XboxIcon } from './icons/xbox'
-import { Game, Platform } from '@/types/game'
+import { PlatformIcon } from './platform-icon'
+import { Game } from '@/types/game'
 
 type GameBannerProps = {
   game: Game
 }
 
 export function GameBanner({ game }: GameBannerProps) {
-  const renderPlatformIcon = (platform: Platform) => {
-    switch (platform) {
-      case Platform.Pc:
-        return <MonitorIcon key="pc" className="size-4 text-white shrink-0" />
-      case Platform.PlayStation:
-        return (
-          <PlayStationIcon
-            key="playstation"
-            className="size-4 fill-white shrink-0"
-          />
-        )
-      case Platform.Xbox:
-        return <XboxIcon key="xbox" className="size-4 fill-white shrink-0" />
-    }
-  }
-
   return (
     <div className="relative h-auto w-full aspect-video border border-zinc-600 rounded-xl overflow-hidden">
       <img src={game.imageUrl} alt="game" className="size-full object-cover" />
 
       <div className="absolute inset-0 size-full p-2 flex flex-col justify-between bg-black/50">
         <div className="self-end flex gap-1">
-          {game.platformsAvaliable.map(renderPlatformIcon)}
+          {game.platformsAvailable.map(platform => (
+            <PlatformIcon
+              key={platform}
+              platform={platform}
+              className="size-4 text-white fill-white shrink-0"
+            />
+          ))}
         </div>
 
         <div className="flex flex-col gap-1">
