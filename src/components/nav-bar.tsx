@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils'
 export function NavBar() {
   return (
     <nav className="fixed bottom-0 w-full h-16 px-4 flex justify-center bg-zinc-950 border-t border-zinc-800">
-      <div className="h-full w-max py-1 flex items-center justify-between gap-4">
+      <div className="h-full w-full py-1 grid grid-cols-5">
         <NavLink href="/settings">
           <SettingsIcon className="size-6" />
           <span>Ajustes</span>
@@ -58,7 +58,7 @@ function NavLink({ href, children, className }: NavLinkProps) {
     <Link
       href={href}
       className={cn(
-        'h-full aspect-square flex flex-col items-center justify-center rounded-xl text-xs',
+        'flex flex-col items-center justify-center rounded-xl text-xs',
         isActive
           ? '*:stroke-2 text-white font-medium'
           : '*:stroke-1 text-zinc-500 font-normal',
