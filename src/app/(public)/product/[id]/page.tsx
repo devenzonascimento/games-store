@@ -28,7 +28,7 @@ export default async function ProductPage({
   const game = (await res.json()) as Game
 
   return (
-    <main className="flex-1 flex flex-col items-center justify-start gap-6 py-6 px-4 bg-zinc-900 overflow-y-auto">
+    <main className="mb-16 flex-1 flex flex-col items-center justify-start gap-6 py-6 px-4 bg-zinc-900 overflow-y-auto">
       <div className="min-h-[280px] aspect-[3/4] overflow-hidden rounded-xl">
         <img
           src={game.imageUrl}
