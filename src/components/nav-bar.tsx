@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { Cart } from './cart'
 
 export function NavBar() {
   return (
@@ -36,10 +37,12 @@ export function NavBar() {
           <span>Catalog</span>
         </NavLink>
 
-        <NavLink href="/cart">
-          <ShoppingCartIcon className="size-6" />
-          <span>Cart</span>
-        </NavLink>
+        <Cart>
+          <NavLink href="/cart" className='pointer-events-none'>
+            <ShoppingCartIcon className="size-6" />
+            <span>Cart</span>
+          </NavLink>
+        </Cart>
       </div>
     </nav>
   )
