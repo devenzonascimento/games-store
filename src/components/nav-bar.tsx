@@ -16,25 +16,15 @@ import { Cart } from './cart'
 export function NavBar() {
   return (
     <nav className="fixed bottom-0 w-full h-16 px-4 flex justify-center bg-zinc-950 border-t border-zinc-800">
-      <div className="h-full w-full py-1 grid grid-cols-5">
-        <NavLink href="/settings">
-          <SettingsIcon className="size-6" />
-          <span>Settings</span>
-        </NavLink>
-
-        <NavLink href="/profile">
-          <UserIcon className="size-6" />
-          <span>Profile</span>
+      <div className="h-full w-full py-1 grid grid-cols-3">
+        <NavLink href="/catalog">
+          <LayoutGridIcon className="size-6" />
+          <span>Catalog</span>
         </NavLink>
 
         <NavLink href="/">
           <HomeIcon className="size-6" />
           <span>Home</span>
-        </NavLink>
-
-        <NavLink href="/catalog">
-          <LayoutGridIcon className="size-6" />
-          <span>Catalog</span>
         </NavLink>
 
         <Cart>

@@ -15,7 +15,7 @@ import { PlatformIcon } from './platform-icon'
 
 export function Cart({ children }: { children: React.ReactNode }) {
   return (
-    <Sheet defaultOpen>
+    <Sheet>
       <SheetTrigger>{children}</SheetTrigger>
       <SheetContent className="w-[350px] sm:w-[540px] py-4 px-4 flex flex-col gap-6">
         <SheetHeader className="w-full flex flex-row items-center justify-between">
