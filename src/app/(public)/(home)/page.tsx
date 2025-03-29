@@ -5,18 +5,7 @@ import { TopicsFilterTags } from '@/components/topics-filter-tags'
 
 export default function HomePage() {
   return (
-    <main className="mb-16 flex-1 bg-zinc-900">
-      {/* <section className="p-4">
-          <div className="p-2 flex items-center gap-2 bg-zinc-800 border border-zinc-600 rounded-xl">
-            <SearchIcon />
-            <input
-              type="text"
-              placeholder="Buscar..."
-              className="flex-1 bg-transparent text-base text-white placeholder:text-zinc-500 outline-none"
-            />
-          </div>
-        </section> */}
-
+    <main className="flex-1 bg-zinc-900">
       <section className="w-full py-2 px-4 flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <FlameIcon className="fill-amber-500 text-red-500" />
@@ -29,7 +18,7 @@ export default function HomePage() {
         <TopicsFilterTags />
       </section>
 
-      <section className="w-full py-2 px-4 grid grid-cols-2 gap-4">
+      <section className="mb-16 w-full py-2 px-4 grid grid-cols-2 gap-4">
         {mockGameCards.map(game => (
           <GameVerticalCard key={game.id} game={game} />
         ))}

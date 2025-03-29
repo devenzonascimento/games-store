@@ -6,6 +6,7 @@ import {
   LayoutGridIcon,
   SettingsIcon,
   ShoppingBasketIcon,
+  ShoppingCartIcon,
   UserIcon,
 } from 'lucide-react'
 import { usePathname } from 'next/navigation'
@@ -17,27 +18,27 @@ export function NavBar() {
       <div className="h-full w-full py-1 grid grid-cols-5">
         <NavLink href="/settings">
           <SettingsIcon className="size-6" />
-          <span>Ajustes</span>
+          <span>Settings</span>
         </NavLink>
 
         <NavLink href="/profile">
           <UserIcon className="size-6" />
-          <span>Perfil</span>
+          <span>Profile</span>
         </NavLink>
 
         <NavLink href="/">
           <HomeIcon className="size-6" />
-          <span>Início</span>
+          <span>Home</span>
         </NavLink>
 
         <NavLink href="/catalog">
           <LayoutGridIcon className="size-6" />
-          <span>Catálogo</span>
+          <span>Catalog</span>
         </NavLink>
 
-        <NavLink href="/basket">
-          <ShoppingBasketIcon className="size-6" />
-          <span>Cesta</span>
+        <NavLink href="/cart">
+          <ShoppingCartIcon className="size-6" />
+          <span>Cart</span>
         </NavLink>
       </div>
     </nav>

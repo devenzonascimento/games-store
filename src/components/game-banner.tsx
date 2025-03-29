@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { PlatformIcon } from './platform-icon'
 import { Game } from '@/types/game'
 
@@ -10,7 +11,7 @@ export function GameBanner({ game }: GameBannerProps) {
     <div className="relative h-auto w-full aspect-video border border-zinc-600 rounded-xl overflow-hidden">
       <img src={game.imageUrl} alt="game" className="size-full object-cover" />
 
-      <div className="absolute inset-0 size-full p-2 flex flex-col justify-between bg-black/50">
+      <Link href={`product/${game.id}`} className="absolute inset-0 size-full p-2 flex flex-col justify-between bg-black/50">
         <div className="self-end flex gap-1">
           {game.platformsAvailable.map(platform => (
             <PlatformIcon
@@ -38,7 +39,7 @@ export function GameBanner({ game }: GameBannerProps) {
             </span>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   )
 }
