@@ -8,7 +8,7 @@ export function TopicsFilterTags() {
   const [activeTag, setActiveTag] = useState('Vencedor')
 
   return (
-    <div className="px-4 grid grid-flow-col gap-2 overflow-x-auto no-scrollbar">
+    <div className="px-4 flex items-start gap-2 overflow-x-auto no-scrollbar">
       <Tag
         title="Vencedor"
         Icon={TrophyIcon}

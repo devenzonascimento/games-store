@@ -25,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className="relative h-[100dvh] w-screen antialiased flex flex-col overflow-y-auto bg-zinc-900"
+        className="relative h-[100dvh] w-screen antialiased flex flex-col items-center bg-zinc-900"
         style={{ ...roboto.style }}
       >
-        <header className="py-2 flex items-center justify-between min-h-16 bg-zinc-950">
+        <header className="py-2 w-full flex items-center justify-between min-h-16 bg-zinc-950">
           <Logo />
         </header>
         {children}
