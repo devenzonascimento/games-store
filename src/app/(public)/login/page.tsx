@@ -1,7 +1,8 @@
-import React, { useId } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { HorseIcon } from '@/components/logo'
-import { CheckIcon, LockKeyholeIcon, MailIcon } from 'lucide-react'
+import { LockKeyholeIcon, MailIcon } from 'lucide-react'
+import { Input } from '@/components/input'
 
 export default function LoginPage() {
   return (
@@ -38,13 +39,12 @@ export default function LoginPage() {
           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
         />
 
-        <button
-          type="submit"
+        <Link
+          href="/"
           className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg group-invalid:opacity-70 group-invalid:pointer-events-none"
         >
-          {/* <Gamepad2Icon className="size-6 text-white shrink-0" /> */}
           Login
-        </button>
+        </Link>
 
         <p className="w-full text-start">
           Don't have an account?
@@ -53,33 +53,6 @@ export default function LoginPage() {
           </Link>
         </p>
       </form>
-    </div>
-  )
-}
-
-type InputProps = React.ComponentProps<'input'> & {
-  Icon: React.ElementType
-}
-function Input({ Icon, className, ...props }: InputProps) {
-  const id = useId()
-
-  return (
-    <div className="relative w-full">
-      <input
-        className="peer w-full bg-transparent p-2 pl-10 border focus:border-zinc-300 placeholder-shown:border-zinc-600 text-white placeholder:text-zinc-400 autofill:bg-green-600 rounded-lg outline-0"
-        {...props}
-        id={id}
-      />
-      <label htmlFor={id} className="absolute top-1/2 -translate-y-1/2 left-3">
-        <Icon className=" size-5 text-zinc-300 shrink-0" />
-      </label>
-
-      <label
-        htmlFor={id}
-        className="invisible peer-valid:visible absolute top-1/2 -translate-y-1/2 right-3"
-      >
-        <CheckIcon className=" size-5 text-zinc-300 shrink-0" />
-      </label>
     </div>
   )
 }
