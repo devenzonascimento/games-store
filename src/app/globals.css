@@ -66,3 +66,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+*::-webkit-scrollbar {
+  @apply w-2 cursor-default;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-zinc-600 rounded-lg;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-zinc-400 rounded-xl;
+}
