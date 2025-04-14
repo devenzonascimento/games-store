@@ -10,8 +10,8 @@ export default function Catalog() {
   const [searchValue, setSearchValue] = useState('')
 
   return (
-    <main className="mb-16 flex-1 flex flex-col bg-zinc-900 overflow-hidden">
-      <section className="p-4">
+    <main className="w-full flex-1 flex flex-col bg-zinc-900 overflow-hidden">
+      <section className="w-full p-4">
         <div className="p-2 flex items-center gap-2 bg-zinc-800 border border-zinc-600 rounded-xl">
           <SearchIcon />
           <input
@@ -24,7 +24,7 @@ export default function Catalog() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-3 p-4 overflow-y-auto">
+      <section className="flex flex-col gap-3 p-4 overflow-y-auto max-lg:no-scrollbar">
         {mockGames
           .filter(g => (searchValue ? g.title.includes(searchValue) : true))
           .map(game => {

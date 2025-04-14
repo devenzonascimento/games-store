@@ -5,7 +5,7 @@ import { TopicsFilterTags } from '@/components/topics-filter-tags'
 
 export default function HomePage() {
   return (
-    <main className="w-full flex-1 bg-zinc-900 overflow-y-auto">
+    <main className="w-full flex-1 bg-zinc-900 overflow-y-auto max-lg:no-scrollbar">
       <section className="w-full py-2 px-4 flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <FlameIcon className="fill-amber-500 text-red-500" />
@@ -18,15 +18,8 @@ export default function HomePage() {
         <TopicsFilterTags />
       </section>
 
-      <section className="mb-16 w-full py-2 px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {[
-          ...mockGameCards,
-          ...mockGameCards,
-          ...mockGameCards,
-          ...mockGameCards,
-          ...mockGameCards,
-          ...mockGameCards,
-        ].map(game => (
+      <section className="w-full py-2 px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {mockGameCards.map(game => (
           <GameVerticalCard key={game.id} game={game} />
         ))}
       </section>

@@ -7,6 +7,8 @@ const jaini = Jaini({
   style: ['normal'],
   subsets: ['latin'],
   display: 'swap',
+  adjustFontFallback: true,
+  fallback: ['sans-serif'],
 })
 
 export function Logo() {
