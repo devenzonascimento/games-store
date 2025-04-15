@@ -4,6 +4,7 @@ import { NavBar, Sidebar } from '@/components/nav-bar'
 import { Logo } from '@/components/logo'
 
 import { Roboto } from 'next/font/google'
+import { QueryProvider } from '@/lib/query-client-provider'
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -33,11 +34,13 @@ export default function RootLayout({
         <header className="py-2 w-full flex items-center justify-between min-h-16 bg-zinc-950 border-b border-b-zinc-600">
           <Logo />
         </header>
-        <div className="flex-1 w-screen self-start flex overflow-hidden">
-          <Sidebar />
-          {children}
-        </div>
-        <NavBar />
+        <QueryProvider>
+          <div className="flex-1 w-screen self-start flex overflow-hidden">
+            <Sidebar />
+            {children}
+          </div>
+          <NavBar />
+        </QueryProvider>
       </body>
     </html>
   )
