@@ -45,7 +45,9 @@ export default function Catalog() {
           ))}
 
         {!isPending &&
-          games?.map(game => <GameHorizontalCard key={game.id} game={game} />)}
+          games
+            ?.filter(g => (searchValue ? g.title.includes(searchValue) : true))
+            ?.map(game => <GameHorizontalCard key={game.id} game={game} />)}
       </section>
     </main>
   )
