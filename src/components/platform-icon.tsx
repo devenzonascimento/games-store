@@ -3,6 +3,7 @@ import { MonitorIcon } from 'lucide-react'
 import { PlayStationIcon } from './icons/playstation'
 import { XboxIcon } from './icons/xbox'
 import { cn } from '@/lib/utils'
+import { NintendoSwitchIcon } from './icons/nintendo-switch'
 
 type PlatformIconProps = {
   platform: Platform
@@ -17,5 +18,7 @@ export function PlatformIcon({ platform, className }: PlatformIconProps) {
       return <PlayStationIcon className={className} />
     case Platform.Xbox:
       return <XboxIcon className={className} />
+    case Platform.NintendoSwitch:
+      return <NintendoSwitchIcon className={className} />
   }
 }
