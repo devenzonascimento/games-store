@@ -20,7 +20,7 @@ export default function HomePage() {
   )
 }
 
-export const mockGameBanners = [
+const mockGameBanners = [
   {
     id: 1,
     imageUrl: '/forza-horizon-5-banner.png',
@@ -29,6 +29,8 @@ export const mockGameBanners = [
       'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. The Premium Edition includes early access to the full game, allowing you to play four days early beginning November 5, 2021. Also included are the Welcome Pack, Car Pass, VIP Membership, and two game expansions when they become available.',
     price: 359.9,
     platformsAvailable: [2, 1],
+    year: 2021,
+    category: 'Racing',
   },
   {
     id: 2,
@@ -38,6 +40,8 @@ export const mockGameBanners = [
       'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. The Premium Edition includes early access to the full game, allowing you to play four days early beginning November 5, 2021. Also included are the Welcome Pack, Car Pass, VIP Membership, and two game expansions when they become available.',
     price: 359.9,
     platformsAvailable: [2, 1],
+    year: 2021,
+    category: 'Racing',
   },
   {
     id: 3,
@@ -47,6 +51,8 @@ export const mockGameBanners = [
       'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. The Premium Edition includes early access to the full game, allowing you to play four days early beginning November 5, 2021. Also included are the Welcome Pack, Car Pass, VIP Membership, and two game expansions when they become available.',
     price: 359.9,
     platformsAvailable: [2, 1],
+    year: 2021,
+    category: 'Racing',
   },
   {
     id: 4,
@@ -56,6 +62,8 @@ export const mockGameBanners = [
       'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. The Premium Edition includes early access to the full game, allowing you to play four days early beginning November 5, 2021. Also included are the Welcome Pack, Car Pass, VIP Membership, and two game expansions when they become available.',
     price: 359.9,
     platformsAvailable: [2, 1],
+    year: 2021,
+    category: 'Racing',
   },
   {
     id: 5,
@@ -65,5 +73,7 @@ export const mockGameBanners = [
       'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. The Premium Edition includes early access to the full game, allowing you to play four days early beginning November 5, 2021. Also included are the Welcome Pack, Car Pass, VIP Membership, and two game expansions when they become available.',
     price: 359.9,
     platformsAvailable: [2, 1],
+    year: 2021,
+    category: 'Racing',
   },
 ]

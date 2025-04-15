@@ -39,7 +39,7 @@ export default function Catalog() {
       </section>
 
       <section className="flex flex-col gap-3 p-4 overflow-y-auto max-lg:no-scrollbar">
-        {!isPending &&
+        {isPending &&
           Array.from({ length: 10 }).map((_, index) => (
             <GameHorizontalCardSkeleton key={index.toString()} />
           ))}

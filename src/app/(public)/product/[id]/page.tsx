@@ -1,6 +1,5 @@
 import { PlatformIcon } from '@/components/platform-icon'
 import { Game } from '@/types/game'
-import axios from 'axios'
 import {
   Gamepad2Icon,
   ShoppingCartIcon,
@@ -8,13 +7,13 @@ import {
   StarIcon,
 } from 'lucide-react'
 
-export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/game`)
+// export async function generateStaticParams() {
+//   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/game`)
 
-  const games = (await res.json()) as Game[]
+//   const games = (await res.json()) as Game[]
 
-  return games.map(({ id }) => ({ id: id.toString() }))
-}
+//   return games.map(({ id }) => ({ id: id.toString() }))
+// }
 
 export default async function ProductPage({
   params,

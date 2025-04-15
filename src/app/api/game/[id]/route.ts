@@ -1,3 +1,5 @@
+import { Game } from '@/types/game'
+
 type Params = {
   params: Promise<{ id: string }>
 }
@@ -6,10 +8,10 @@ export async function GET(request: Request, { params }: Params) {
   const { id } = await params
   const game = mockGames.find(game => game.id === Number(id))
 
-  return Response.json(game || {})
+  return Response.json(game)
 }
 
-export const mockGames = [
+const mockGames: Game[] = [
   {
     id: 1,
     imageUrl: '/gta-6.png',
@@ -20,7 +22,6 @@ export const mockGames = [
     platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
-    tags: ['Open World', 'Action', 'Adventure'],
   },
   {
     id: 2,
@@ -32,7 +33,6 @@ export const mockGames = [
     platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
-    tags: ['Open World', 'Action', 'Adventure'],
   },
   {
     id: 3,
@@ -44,7 +44,6 @@ export const mockGames = [
     platformsAvailable: [0, 2, 1],
     year: 2025,
     category: 'Shooter',
-    tags: ['Open World', 'Action', 'Adventure'],
   },
   {
     id: 4,
@@ -55,7 +54,6 @@ export const mockGames = [
     platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
-    tags: ['Open World', 'Action', 'Adventure'],
   },
   {
     id: 5,
@@ -67,6 +65,5 @@ export const mockGames = [
     platformsAvailable: [2, 1],
     year: 2025,
     category: 'Shooter',
-    tags: ['Open World', 'Action', 'Adventure'],
   },
 ]

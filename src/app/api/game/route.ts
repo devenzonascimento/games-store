@@ -1,8 +1,10 @@
+import { Game } from '@/types/game'
+
 export async function GET() {
   return Response.json(mockGames)
 }
 
-export const mockGames = [
+const mockGames: Game[] = [
   {
     id: 1,
     imageUrl: '/gta-6.png',
