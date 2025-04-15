@@ -1,7 +1,8 @@
 export enum Platform {
   Pc = 0,
-  PlayStation = 1,
-  Xbox = 2,
+  Xbox = 1,
+  PlayStation = 2,
+  NintendoSwitch = 3
 }
 
 export type Game = {
@@ -11,4 +12,6 @@ export type Game = {
   price: number
   platformsAvailable: Platform[]
   imageUrl: string
+  year?: number
+  category?: string
 }
