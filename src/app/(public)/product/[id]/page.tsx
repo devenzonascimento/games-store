@@ -22,7 +22,7 @@ export default async function ProductPage({
 }) {
   const { id } = await params
 
-  const apiUrl = `/api/game/${id}`
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/game/${id}`
   const res = await fetch(apiUrl)
   const game = (await res.json()) as Game
 
