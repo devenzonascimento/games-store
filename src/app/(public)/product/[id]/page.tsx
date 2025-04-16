@@ -83,6 +83,7 @@ export default async function ProductPage({
             <Gamepad2Icon className="size-6 text-white shrink-0" />
             Buy now
           </button>
+
           <button
             type="button"
             className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70"
@@ -111,7 +112,7 @@ export default async function ProductPage({
         <section className="w-full flex flex-col gap-2">
           <h2 className="text-xl font-semibold text-white">Genres</h2>
 
-          <div className="ml-1 px-2 py-1 text-sm font-medium text-white border border-zinc-600 rounded-md max-w-min">
+          <div className="ml-1 px-2 py-1 text-sm font-medium text-white border border-zinc-600 rounded-md max-w-min min-w-max">
             {game.category}
           </div>
           {/* // TODO: Colocar lista de tags */}

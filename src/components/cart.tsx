@@ -5,7 +5,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -74,19 +73,6 @@ export function Cart({ children }: { children: React.ReactNode }) {
       </SheetContent>
     </Sheet>
   )
-}
-
-const mock = {
-  id: 1,
-  imageUrl: '/gta-6.png',
-  title: 'Grand Theft Auto VI',
-  description:
-    'Grand Theft Auto VI heads to the state of Leonida, home to the neon-soaked streets of Vice City and beyond in the biggest, most immersive evolution of the Grand Theft Auto series yet.',
-  price: 359.9,
-  platformsAvailable: [2, 1],
-  year: 2025,
-  category: 'Shooter',
-  tags: ['Open World', 'Action', 'Adventure'],
 }
 
 type CartItemProps = {
