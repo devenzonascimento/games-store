@@ -66,7 +66,7 @@ export function Cart({ children }: { children: React.ReactNode }) {
 
         <button
           type="button"
-          className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg"
+          className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70"
         >
           <BanknoteIcon className="size-6 shrink-0" />
           Procced to checkout

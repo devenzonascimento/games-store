@@ -78,14 +78,14 @@ export default async function ProductPage({
         <div className="w-full flex flex-col items-center gap-4">
           <button
             type="button"
-            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-emerald-800 rounded-lg"
+            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-emerald-800 rounded-lg hover:opacity-70"
           >
             <Gamepad2Icon className="size-6 text-white shrink-0" />
             Buy now
           </button>
           <button
             type="button"
-            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg"
+            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70"
           >
             <ShoppingCartIcon className="size-6 shrink-0" />
             Add to cart
