@@ -2,7 +2,13 @@
 
 import { useState } from 'react'
 import { Tag } from './tag'
-import { TrophyIcon, CalendarIcon, SparklesIcon } from 'lucide-react'
+import {
+  TrophyIcon,
+  CalendarIcon,
+  SparklesIcon,
+  GamepadIcon,
+  HeartIcon,
+} from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { Game } from '@/types/game'
 import {
@@ -44,6 +50,24 @@ export function GameCards() {
           Icon={SparklesIcon}
           isActive={'New Releases' === activeTag}
           onClick={() => setActiveTag('New Releases')}
+        />
+        <Tag
+          title="Most Played"
+          Icon={GamepadIcon}
+          isActive={'Most Played' === activeTag}
+          onClick={() => setActiveTag('Most Played')}
+        />
+        <Tag
+          title="Most Wishlisted"
+          Icon={HeartIcon}
+          isActive={'Most Wishlisted' === activeTag}
+          onClick={() => setActiveTag('Most Wishlisted')}
+        />
+        <Tag
+          title="Coming Soon"
+          Icon={CalendarIcon}
+          isActive={'Coming Soon' === activeTag}
+          onClick={() => setActiveTag('Coming Soon')}
         />
       </div>
 

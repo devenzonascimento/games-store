@@ -1,8 +1,7 @@
-import React, { useId } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { HorseIcon } from '@/components/logo'
 import {
-  CheckIcon,
   LockKeyholeIcon,
   MailIcon,
   UserIcon,
@@ -13,7 +12,7 @@ import { Input } from '@/components/input'
 
 export default function RegisterPage() {
   return (
-    <div className="fixed inset-0 h-dvh w-dvw flex justify-center bg-zinc-950">
+    <div className="fixed inset-0 h-dvh w-dvw flex sm:items-center justify-center bg-zinc-950">
       <form className="group relative z-10 flex-1 px-4 py-6 flex flex-col items-center gap-6 sm:max-h-min sm:max-w-[500px] sm:py-4 sm:border sm:border-zinc-600 sm:rounded-lg sm:bg-white/5">
         <HorseIcon className="max-sm:hidden -z-10 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 blur-md w-10/12 h-auto fill-zinc-700" />
 
