@@ -3,9 +3,34 @@ import { GameBannersCarousel } from '@/components/game-banners-carousel'
 import { GameCards } from '@/components/game-cards'
 import { Game } from '@/types/game'
 
-export default function HomePage() {
+interface IGDBGame {
+  id: number;
+  name: string;
+  summary?: string;
+  cover?: { url: string };
+  genres?: { name: string }[];
+}
+
+export default async function HomePage() {
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/igdb/games?search=Zelda`,
+  //   { next: { revalidate: 3600 } }
+  // );
+
+  // if (!res.ok) {
+  //   console.error(`Failed to fetch games: ${res.status} ${res.statusText}`);
+  //   return (
+  //     <main className="w-full flex-1 bg-zinc-900 overflow-y-auto max-lg:no-scrollbar">
+  //       <p className="text-red-500">Failed to load games. Please try again later.</p>
+  //     </main>
+  //   );
+  // }
+
+  // const games: IGDBGame[] = await res.json();
+
   return (
     <main className="w-full flex-1 bg-zinc-900 overflow-y-auto max-lg:no-scrollbar">
+      {/* {JSON.stringify(games)} */}
       <section className="w-full py-2 px-4 flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <FlameIcon className="fill-amber-500 text-red-500" />

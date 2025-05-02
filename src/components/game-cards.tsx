@@ -16,17 +16,33 @@ import {
   GameVerticalCardSkeleton,
 } from './game-vertical-card'
 
+type PaginatedResponse<T> = {
+  page: number
+  limit: number
+  games: T[]
+}
+
 export function GameCards() {
   const [activeTag, setActiveTag] = useState('Winner')
 
+  // const { data: mockGameCards, isPending } = useQuery({
+  //   queryKey: ['games', activeTag],
+  //   queryFn: async () => {
+  //     const res = await fetch('/api/game')
+
+  //     const games = (await res.json()) as Game[]
+
+  //     return games
+  //   },
+  // })
   const { data: mockGameCards, isPending } = useQuery({
     queryKey: ['games', activeTag],
     queryFn: async () => {
-      const res = await fetch('/api/game')
+      const res = await fetch('/api/igdb/games')
 
-      const games = (await res.json()) as Game[]
+      const result = (await res.json()) as PaginatedResponse<Game>
 
-      return games
+      return result.games
     },
   })
 
