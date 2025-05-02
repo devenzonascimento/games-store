@@ -11,6 +11,16 @@ interface IGDBGame {
   genres?: { name: string }[];
 }
 
+// TODO: Pensar na posibilidade de gerar um script para mockar muitos dados deles, ao invés de usar a api, pensando em performance e disponibilidade para o dia da apresentação
+
+// TODO: Integrar um endpoint de mock para pegar os principais jogos para o banner da home
+
+// TODO: Pensar na integração com o banco de dados principal para conectar jogos em produtos e vendas
+
+// TODO: Reimaginar a pagina e colocar mais features como carrinho de compras, toasts, checkout, busca e filtragem complexa etc,
+
+// TODO: Ajustar uma query base para não trazer jogos lixos
+
 export default async function HomePage() {
   // const res = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/igdb/games?search=Zelda`,
