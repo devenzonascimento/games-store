@@ -79,7 +79,7 @@ export function GameCards() {
         />
       </div>
 
-      <div className="w-full px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="w-full px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
         {isPending &&
           Array.from({ length: 10 }).map((_, index) => (
             <GameVerticalCardSkeleton key={index.toString()} />

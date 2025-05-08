@@ -33,7 +33,7 @@ export function GameBannersCarousel({ games }: GameBannersCarouselProps) {
           {games.map(game => (
             <CarouselItem
               key={game.id}
-              className="sm:basis-9/12 md:basis-8/12 lg:basis-10/12"
+              className="sm:basis-9/12 md:basis-8/12 lg:basis-10/12 xl:basis-full"
             >
               <GameBanner game={game} />
             </CarouselItem>

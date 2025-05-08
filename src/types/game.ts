@@ -22,15 +22,15 @@ export enum IGDBPlatform {
 }
 
 export type IGDBRawGame = {
-  id: number;
-  name: string;
-  summary?: string;
-  first_release_date?: number;
-  cover?: { url: string };
-  artworks?: { url: string }[];
-  screenshots?: { url: string }[];
-  platforms?: number[];
-  genres?: { name: string }[];
+  id: number
+  name: string
+  summary?: string
+  first_release_date?: number
+  cover?: { url: string }
+  artworks?: { url: string }[]
+  screenshots?: { url: string }[]
+  platforms?: number[]
+  genres?: { name: string }[]
 }
 
 // types/game.ts
@@ -42,14 +42,31 @@ export enum Platform {
 }
 
 export type Game = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  platformsAvailable: Platform[];
-  imageUrl: string;      // portrait
-  bannerUrl?: string;    // paisagem principal
-  gallery?: string[];    // banners alternativos
-  year?: number;
-  category?: string;
-};
+  id: number
+  title: string
+  description: string
+  price: number
+  platformsAvailable: Platform[]
+  imageUrl: string // portrait
+  bannerUrl?: string // paisagem principal
+  gallery?: string[] // banners alternativos
+  year?: number
+  category?: string
+}
+
+export type GameCard = {
+  id: number
+  title: string
+  description: string
+  price: number
+  imageUrl: string
+}
+
+export type GameBanner = {
+  id: number
+  title: string
+  description: string
+  price: number
+  imageUrl: string
+  platformsAvailable: Platform[]
+}

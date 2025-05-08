@@ -24,7 +24,7 @@ export function toGame(raw: IGDBRawGame): Game {
     price: Math.floor(Math.random() * 200) + 50,  // placeholder ou vindo de outro serviço
     platformsAvailable: raw.platforms ? mapPlatforms(raw.platforms) : [],
     imageUrl: raw.cover?.url.replace('t_thumb', 't_cover_big') ?? '',
-    bannerUrl: raw.artworks?.[0]?.url.replace('t_thumb', 't_screenshot_huge'),
+    bannerUrl: raw.artworks?.[0]?.url.replace('t_thumb', 't_1080p'),
     gallery: raw.screenshots?.map((s) =>
       s.url.replace('t_thumb', 't_screenshot_huge')
     ),
