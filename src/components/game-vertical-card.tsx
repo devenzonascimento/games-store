@@ -1,4 +1,5 @@
 import { Game } from '@/types/game'
+import { Gamepad2Icon } from 'lucide-react'
 import Link from 'next/link'
 
 type GameVerticalCardProps = {
@@ -12,11 +13,18 @@ export function GameVerticalCard({ game }: GameVerticalCardProps) {
       className="w-full min-w-[150px] flex flex-col gap-2 active:scale-105 transition-transform duration-300 delay-200"
     >
       <div className="aspect-[3/4] overflow-hidden rounded-xl">
-        <img
-          src={game.imageUrl}
-          alt="game"
-          className="size-full object-cover"
-        />
+        {game.imageUrl && (
+          <img
+            src={game.imageUrl}
+            alt="game"
+            className="size-full object-cover"
+          />
+        )}
+        {!game.imageUrl && (
+          <div className="size-full bg-zinc-950 flex items-center justify-center px-4">
+            <Gamepad2Icon className="text-white size-full shrink-0" />
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-1">
