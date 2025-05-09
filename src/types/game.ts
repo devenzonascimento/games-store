@@ -33,20 +33,12 @@ export type IGDBRawGame = {
   genres?: { name: string }[]
 }
 
-// types/game.ts
-export enum Platform {
-  Pc = 0,
-  Xbox = 1,
-  PlayStation = 2,
-  NintendoSwitch = 3,
-}
-
 export type Game = {
   id: number
   title: string
   description: string
   price: number
-  platformsAvailable: Platform[]
+  platformsAvailable: IGDBPlatform[]
   imageUrl: string // portrait
   bannerUrl?: string // paisagem principal
   gallery?: string[] // banners alternativos
@@ -68,5 +60,11 @@ export type GameBanner = {
   description: string
   price: number
   imageUrl: string
-  platformsAvailable: Platform[]
+  platformsAvailable: IGDBPlatform[]
+}
+
+export type PaginatedResponse<T> = {
+  page: number
+  limit: number
+  games: T[]
 }

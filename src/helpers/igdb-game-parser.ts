@@ -1,34 +1,57 @@
-import { IGDBRawGame } from '@/types/game';
-import { Game, Platform } from '@/types/game';
+import { IGDBPlatform, IGDBRawGame } from '@/types/game'
+import { Game } from '@/types/game'
 
-export function mapPlatforms(ids: number[]): Platform[] {
-  return ids
-    .map((id) => {
-      if (id === 6) return Platform.Pc;
-      if (id === 167) return Platform.Xbox;
-      if (id === 187) return Platform.PlayStation;
-      if (id === 130) return Platform.NintendoSwitch;
-    })
-    .filter((p): p is Platform => p !== undefined);
+const groupByPlatform = (igdbPlatformsIds: number[]) => {
+  const result: IGDBPlatform[] = []
+
+  for (const platform of igdbPlatformsIds) {
+    switch (platform) {
+      case IGDBPlatform.PC:
+        result.push(platform)
+        break
+      case IGDBPlatform.PlayStation1:
+      case IGDBPlatform.PlayStation2:
+      case IGDBPlatform.PlayStation3:
+      case IGDBPlatform.PlayStation4:
+      case IGDBPlatform.PlayStation5:
+        if (!result.find(p => p === IGDBPlatform.PlayStation5)) {
+          result.push(IGDBPlatform.PlayStation5)
+        }
+        break
+      case IGDBPlatform.Xbox:
+      case IGDBPlatform.Xbox360:
+      case IGDBPlatform.XboxOne:
+      case IGDBPlatform.XboxSeries:
+        if (!result.find(p => p === IGDBPlatform.XboxSeries)) {
+          result.push(IGDBPlatform.XboxSeries)
+        }
+        break
+      case IGDBPlatform.NintendoSwitch:
+        result.push(platform)
+        break
+    }
+  }
+
+  return result.sort((a, b) => a - b)
 }
 
 export function toGame(raw: IGDBRawGame): Game {
   const year = raw.first_release_date
     ? new Date(raw.first_release_date * 1000).getFullYear()
-    : undefined;
+    : undefined
 
   return {
     id: raw.id,
     title: raw.name,
     description: raw.summary ?? '',
-    price: Math.floor(Math.random() * 200) + 50,  // placeholder ou vindo de outro serviço
-    platformsAvailable: raw.platforms ? mapPlatforms(raw.platforms) : [],
+    price: Math.floor(Math.random() * 200) + 50, // placeholder ou vindo de outro serviço
+    platformsAvailable: raw.platforms ? groupByPlatform(raw.platforms) : [],
     imageUrl: raw.cover?.url.replace('t_thumb', 't_cover_big') ?? '',
     bannerUrl: raw.artworks?.[0]?.url.replace('t_thumb', 't_1080p'),
-    gallery: raw.screenshots?.map((s) =>
-      s.url.replace('t_thumb', 't_screenshot_huge')
+    gallery: raw.screenshots?.map(s =>
+      s.url.replace('t_thumb', 't_screenshot_huge'),
     ),
     year,
     category: raw.genres?.[0]?.name,
-  };
+  }
 }
