@@ -10,17 +10,11 @@ import {
   HeartIcon,
 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
-import { Game, Topic } from '@/types/game'
+import { Game, PaginatedResponse, Topic } from '@/types/game'
 import {
   GameVerticalCard,
   GameVerticalCardSkeleton,
 } from './game-vertical-card'
-
-type PaginatedResponse<T> = {
-  page: number
-  limit: number
-  games: T[]
-}
 
 export function GameCards() {
   const [activeTag, setActiveTag] = useState<Topic>('top-rated')
