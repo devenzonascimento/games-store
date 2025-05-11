@@ -13,7 +13,7 @@ const jaini = Jaini({
 
 export function Logo() {
   return (
-    <div className="flex items-center gap-2 px-4">
+    <div className="flex items-center gap-2 px-2">
       <HorseIcon className="size-10 fill-white" />
       <span
         className="font-logo font-semibold text-4xl"

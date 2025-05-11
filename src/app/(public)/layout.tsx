@@ -5,6 +5,7 @@ import { Logo } from '@/components/logo'
 
 import { Roboto } from 'next/font/google'
 import { QueryProvider } from '@/lib/query-client-provider'
+import { Header } from '@/components/header'
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -31,10 +32,8 @@ export default function RootLayout({
         className="relative h-[100dvh] w-screen antialiased flex flex-col items-center bg-zinc-900"
         style={{ ...roboto.style }}
       >
-        <header className="py-2 w-full flex items-center justify-between min-h-16 bg-zinc-950 border-b border-b-zinc-600">
-          <Logo />
-        </header>
         <QueryProvider>
+          <Header />
           <div className="flex-1 w-screen self-start flex overflow-hidden">
             <Sidebar />
             {children}
