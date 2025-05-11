@@ -1,31 +1,41 @@
+'use client'
+
 import { PlatformIcon } from '@/components/platform-icon'
+import { useCartStore } from '@/store/cart-store'
 import { Game } from '@/types/game'
+import { useQuery } from '@tanstack/react-query'
 import {
   Gamepad2Icon,
   ShoppingCartIcon,
   StarHalfIcon,
   StarIcon,
 } from 'lucide-react'
+import { useParams } from 'next/navigation'
+import Loading from './loading'
+import { DiscountType } from '@/types/product'
 
-// export async function generateStaticParams() {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/game`)
-
-//   const games = (await res.json()) as Game[]
-
-//   return games.map(({ id }) => ({ id: id.toString() }))
-// }
-
-export default async function ProductPage({
+export default function ProductPage({
   params,
 }: {
   params: Promise<{ id: string }>
 }) {
-  const { id } = await params
+  const { id } = useParams()
+  const { openCart, addItem } = useCartStore()
 
-  // const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/game/${id}`
-  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/igdb/games/${id}`
-  const res = await fetch(apiUrl)
-  const game = (await res.json()) as Game
+  const { data: game, isPending } = useQuery({
+    queryKey: ['game', id],
+    queryFn: async () => {
+      const res = await fetch(`/api/igdb/games/${id}`)
+
+      const game: Game = await res.json()
+
+      return game
+    },
+  })
+
+  if (isPending || !game) {
+    return <Loading />
+  }
 
   return (
     <main className="flex-1 flex flex-col items-center justify-start gap-6 py-6 px-4 bg-zinc-900 overflow-y-auto">
@@ -80,6 +90,21 @@ export default async function ProductPage({
           <button
             type="button"
             className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-emerald-800 rounded-lg hover:opacity-70"
+            onClick={() => {
+              addItem({
+                id: game.id,
+                price: 777,
+                discount: 50,
+                discountType: DiscountType.Percentage,
+                game: {
+                  id: game.id,
+                  title: game.title,
+                  imageUrl: game.imageUrl,
+                  platformsAvailable: game.platformsAvailable,
+                },
+              })
+              openCart()
+            }}
           >
             <Gamepad2Icon className="size-6 text-white shrink-0" />
             Buy now
@@ -88,6 +113,20 @@ export default async function ProductPage({
           <button
             type="button"
             className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70"
+            onClick={() => {
+              addItem({
+                id: game.id,
+                price: 777,
+                discount: 50,
+                discountType: DiscountType.Percentage,
+                game: {
+                  id: game.id,
+                  title: game.title,
+                  imageUrl: game.imageUrl,
+                  platformsAvailable: game.platformsAvailable,
+                },
+              })
+            }}
           >
             <ShoppingCartIcon className="size-6 shrink-0" />
             Add to cart

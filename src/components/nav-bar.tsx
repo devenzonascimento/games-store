@@ -1,16 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { HomeIcon, LayoutGridIcon, ShoppingCartIcon } from 'lucide-react'
+import { HomeIcon, LayoutGridIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Cart } from './cart'
 import { cva } from 'class-variance-authority'
 
 export function NavBar() {
   return (
     <nav className="lg:hidden w-full h-16 px-4 flex justify-center bg-zinc-950 border-t border-zinc-800">
-      <div className="h-full w-full py-1 grid grid-cols-3">
+      <div className="h-full w-full py-1 grid grid-cols-2">
         <NavLink variant="navbar" href="/catalog">
           <LayoutGridIcon className="size-6" />
           <span>Catalog</span>
@@ -20,17 +19,6 @@ export function NavBar() {
           <HomeIcon className="size-6" />
           <span>Home</span>
         </NavLink>
-
-        <Cart>
-          <NavLink
-            variant="navbar"
-            href="/cart"
-            className="pointer-events-none"
-          >
-            <ShoppingCartIcon className="size-6" />
-            <span>Cart</span>
-          </NavLink>
-        </Cart>
       </div>
     </nav>
   )
@@ -84,13 +72,6 @@ export function Sidebar() {
         <LayoutGridIcon className="size-5" />
         <span>Catalog</span>
       </NavLink>
-
-      <Cart>
-        <NavLink variant="sidebar" href="/cart" className="pointer-events-none">
-          <ShoppingCartIcon className="size-5" />
-          <span>Cart</span>
-        </NavLink>
-      </Cart>
     </aside>
   )
 }

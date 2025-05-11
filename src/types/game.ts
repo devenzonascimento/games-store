@@ -63,6 +63,13 @@ export type GameBanner = {
   platformsAvailable: IGDBPlatform[]
 }
 
+export type GameCartItem = {
+  id: number
+  title: string
+  imageUrl: string
+  platformsAvailable: IGDBPlatform[]
+}
+
 export type PaginatedResponse<T> = {
   page: number
   limit: number
