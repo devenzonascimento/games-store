@@ -10,23 +10,25 @@ import {
   HeartIcon,
 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
-import { Game } from '@/types/game'
+import { Game, PaginatedResponse, Topic } from '@/types/game'
 import {
   GameVerticalCard,
   GameVerticalCardSkeleton,
 } from './game-vertical-card'
 
 export function GameCards() {
-  const [activeTag, setActiveTag] = useState('Winner')
+  const [activeTag, setActiveTag] = useState<Topic>('top-rated')
 
-  const { data: mockGameCards, isPending } = useQuery({
+  const { data: games, isPending } = useQuery({
     queryKey: ['games', activeTag],
     queryFn: async () => {
-      const res = await fetch('/api/game')
+      const url = `/api/igdb/games?topic=${activeTag}&page=${0}&limit=${30}`
 
-      const games = (await res.json()) as Game[]
+      const res = await fetch(url)
 
-      return games
+      const result = (await res.json()) as PaginatedResponse<Game>
+
+      return result.games
     },
   })
 
@@ -34,53 +36,51 @@ export function GameCards() {
     <section className="w-full py-2 px-0 flex flex-col gap-4">
       <div className="px-4 flex items-start gap-2 overflow-x-auto no-scrollbar">
         <Tag
-          title="Winner"
+          title="Top Rated"
           Icon={TrophyIcon}
-          isActive={'Winner' === activeTag}
-          onClick={() => setActiveTag('Winner')}
+          isActive={'top-rated' === activeTag}
+          onClick={() => setActiveTag('top-rated')}
         />
         <Tag
           title="Best Sellers"
           Icon={CalendarIcon}
-          isActive={'Best Sellers' === activeTag}
-          onClick={() => setActiveTag('Best Sellers')}
+          isActive={'best-sellers' === activeTag}
+          onClick={() => setActiveTag('best-sellers')}
         />
         <Tag
           title="New Releases"
           Icon={SparklesIcon}
-          isActive={'New Releases' === activeTag}
-          onClick={() => setActiveTag('New Releases')}
+          isActive={'new-releases' === activeTag}
+          onClick={() => setActiveTag('new-releases')}
         />
         <Tag
           title="Most Played"
           Icon={GamepadIcon}
-          isActive={'Most Played' === activeTag}
-          onClick={() => setActiveTag('Most Played')}
+          isActive={'most-played' === activeTag}
+          onClick={() => setActiveTag('most-played')}
         />
         <Tag
           title="Most Wishlisted"
           Icon={HeartIcon}
-          isActive={'Most Wishlisted' === activeTag}
-          onClick={() => setActiveTag('Most Wishlisted')}
+          isActive={'most-wishlisted' === activeTag}
+          onClick={() => setActiveTag('most-wishlisted')}
         />
         <Tag
           title="Coming Soon"
           Icon={CalendarIcon}
-          isActive={'Coming Soon' === activeTag}
-          onClick={() => setActiveTag('Coming Soon')}
+          isActive={'coming-soon' === activeTag}
+          onClick={() => setActiveTag('coming-soon')}
         />
       </div>
 
-      <div className="w-full px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="w-full px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
         {isPending &&
           Array.from({ length: 10 }).map((_, index) => (
             <GameVerticalCardSkeleton key={index.toString()} />
           ))}
 
         {!isPending &&
-          mockGameCards?.map(game => (
-            <GameVerticalCard key={game.id} game={game} />
-          ))}
+          games?.map(game => <GameVerticalCard key={game.id} game={game} />)}
       </div>
     </section>
   )

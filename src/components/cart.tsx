@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet'
-import { Platform } from '@/types/game'
+import { IGDBPlatform } from '@/types/game'
 import { PlatformIcon } from './platform-icon'
 
 export function Cart({ children }: { children: React.ReactNode }) {
@@ -32,7 +32,7 @@ export function Cart({ children }: { children: React.ReactNode }) {
             id={1}
             title="Grand Theft Auto VI"
             imageUrl="/gta-6.png"
-            platform={Platform.PlayStation}
+            platform={IGDBPlatform.PlayStation5}
             price={569.9}
             discount={0.5}
             onRemove={() => {}}
@@ -79,7 +79,7 @@ type CartItemProps = {
   id: number
   title: string
   imageUrl: string
-  platform: Platform
+  platform: IGDBPlatform
   price: number
   discount: number
   onRemove: () => void
@@ -116,7 +116,7 @@ export function CartItem({
             platform={platform}
             className="size-4 text-white fill-white shrink-0"
           />
-          <span className="text-xs">{Platform[platform]}</span>
+          <span className="text-xs">{IGDBPlatform[platform]}</span>
         </div>
 
         <div className="mt-auto w-full flex items-center gap-2">
