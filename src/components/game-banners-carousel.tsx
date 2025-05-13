@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, ComponentPropsWithRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 import {
   Carousel,
@@ -10,15 +10,32 @@ import {
 } from '@/components/ui/carousel'
 import { EmblaCarouselType } from 'embla-carousel'
 import { GameBanner } from '@/components/game-banner'
-import { Game } from '@/types/game'
+import { PaginatedResponse } from '@/types/game'
+import { useQuery } from '@tanstack/react-query'
+import { ProductWithGame } from '@/types/product'
 
-type GameBannersCarouselProps = {
-  games: Game[]
-}
-
-export function GameBannersCarousel({ games }: GameBannersCarouselProps) {
+export function GameBannersCarousel() {
   const [api, setApi] = useState<CarouselApi>()
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api)
+
+  const { data: products, isPending } = useQuery({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const url = `/api/igdb/games?page=${0}&limit=${5}`
+
+      const res = await fetch(url)
+
+      const result = (await res.json()) as PaginatedResponse<ProductWithGame>
+
+      return result.itens
+    },
+  })
+
+  if (isPending || !products) {
+    return (
+      <div className="w-full h-auto aspect-video flex flex-col gap-2 bg-zinc-700 animate-pulse rounded-xl" />
+    )
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -30,12 +47,12 @@ export function GameBannersCarousel({ games }: GameBannersCarouselProps) {
         setApi={setApi}
       >
         <CarouselContent>
-          {games.map(game => (
+          {products.map(product => (
             <CarouselItem
-              key={game.id}
+              key={product.id}
               className="sm:basis-9/12 md:basis-8/12 lg:basis-10/12 xl:basis-full"
             >
-              <GameBanner game={game} />
+              <GameBanner product={product} />
             </CarouselItem>
           ))}
         </CarouselContent>
