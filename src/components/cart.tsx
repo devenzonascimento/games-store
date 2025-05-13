@@ -1,6 +1,6 @@
 'use client'
 
-import { BanknoteIcon, XIcon } from 'lucide-react'
+import { BanknoteIcon, Trash2Icon, XIcon } from 'lucide-react'
 import {
   Sheet,
   SheetClose,
@@ -14,19 +14,24 @@ import { useCartStore } from '@/store/cart-store'
 import { DiscountType } from '@/types/product'
 import { formatPercentage } from '@/helpers/format-percentage'
 import { formatCurrency } from '@/helpers/format-currency'
+import { useToast } from '@/hooks/use-toast'
+import { ToastAction } from './ui/toast'
 
 export function Cart() {
   const {
     items,
     removeItem,
+    clearCart,
     getTotalPrice,
     getTotalDiscount,
     isCartOpen,
     closeCart,
   } = useCartStore()
 
+  const { toast } = useToast()
+
   return (
-    <Sheet open={isCartOpen}>
+    <Sheet open={isCartOpen} onOpenChange={closeCart}>
       <SheetContent className="w-[350px] sm:w-[540px] py-4 px-4 flex flex-col gap-6">
         <SheetHeader className="w-full flex flex-row items-center justify-between">
           <SheetTitle className="text-xl font-bold text-white">
@@ -65,7 +70,7 @@ export function Cart() {
           <li className="px-2 w-full flex items-center justify-between">
             <span className="text-base text-zinc-300">Discount total</span>
             <span className="text-base font-bold text-zinc-200">
-              {formatCurrency(getTotalDiscount())}
+              {formatCurrency(-getTotalDiscount())}
             </span>
           </li>
 
@@ -78,6 +83,15 @@ export function Cart() {
             </span>
           </li>
         </ul>
+
+        <button
+          type="button"
+          className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-transparent border border-white rounded-lg hover:opacity-70"
+          onClick={clearCart}
+        >
+          <Trash2Icon className="size-6 shrink-0" />
+          Clear cart
+        </button>
 
         <button
           type="button"
@@ -117,7 +131,7 @@ export function CartItem({
       : price - discount
 
   return (
-    <div className="w-full grid grid-cols-[auto_1fr] gap-2" onClick={onRemove}>
+    <div className="w-full grid grid-cols-[auto_1fr] gap-2">
       <div className="w-20 aspect-[3/4] overflow-hidden rounded">
         <img src={imageUrl} alt={title} className="size-full object-cover" />
       </div>
@@ -129,6 +143,7 @@ export function CartItem({
           <button
             type="button"
             className="p-0.5 flex items-center justify-center bg-rose-500 rounded"
+            onClick={onRemove}
           >
             <XIcon className="size-5 text-white shrink-0" />
           </button>

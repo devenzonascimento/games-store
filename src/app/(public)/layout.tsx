@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import '../globals.css'
 import { NavBar, Sidebar } from '@/components/nav-bar'
-import { Logo } from '@/components/logo'
 
 import { Roboto } from 'next/font/google'
 import { QueryProvider } from '@/lib/query-client-provider'
 import { Header } from '@/components/header'
+import { Cart } from '@/components/cart'
+import { Toaster } from '@/components/ui/toaster'
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -38,7 +39,9 @@ export default function RootLayout({
             <Sidebar />
             {children}
           </div>
+          <Cart />
           <NavBar />
+          <Toaster  />
         </QueryProvider>
       </body>
     </html>

@@ -13,6 +13,8 @@ import {
 import { useParams } from 'next/navigation'
 import Loading from './loading'
 import { DiscountType } from '@/types/product'
+import { toast } from '@/hooks/use-toast'
+import { ToastAction } from '@/components/ui/toast'
 
 export default function ProductPage({
   params,
@@ -89,7 +91,7 @@ export default function ProductPage({
         <div className="w-full flex flex-col items-center gap-4">
           <button
             type="button"
-            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-emerald-800 rounded-lg hover:opacity-70"
+            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-emerald-800 rounded-lg sm:hover:opacity-70"
             onClick={() => {
               addItem({
                 id: game.id,
@@ -112,7 +114,7 @@ export default function ProductPage({
 
           <button
             type="button"
-            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70"
+            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg sm:hover:opacity-70"
             onClick={() => {
               addItem({
                 id: game.id,
@@ -125,6 +127,19 @@ export default function ProductPage({
                   imageUrl: game.imageUrl,
                   platformsAvailable: game.platformsAvailable,
                 },
+              })
+              toast({
+                title: 'Game added to cart!',
+                description: `${game.title} has been successfully added to your cart.`,
+                action: (
+                  <ToastAction
+                    altText="Go to cart"
+                    onClick={openCart}
+                    onMouseDown={openCart}
+                  >
+                    View Cart
+                  </ToastAction>
+                ),
               })
             }}
           >
