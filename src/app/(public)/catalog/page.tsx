@@ -2,14 +2,15 @@
 
 import { SearchIcon } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
-import { Game, PaginatedResponse } from '@/types/game'
+import { PaginatedResponse } from '@/types/game'
 import {
   GameHorizontalCard,
   GameHorizontalCardSkeleton,
 } from '@/components/game-horizontal-card'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
+import { ProductWithGame } from '@/types/product'
 
 export default function Catalog() {
   const router = useRouter()
@@ -17,8 +18,8 @@ export default function Catalog() {
   const search = searchParams.get('search') ?? ''
 
   // TODO: Talvez implementar um InfiniteQuery
-  const { data: games, isPending } = useQuery({
-    queryKey: ['games', search],
+  const { data: products, isPending } = useQuery({
+    queryKey: ['products', search],
     queryFn: async () => {
       const url = search
         ? `/api/igdb/games/catalog?search=${encodeURIComponent(search)}`
@@ -26,9 +27,9 @@ export default function Catalog() {
 
       const res = await fetch(url)
 
-      const result = (await res.json()) as PaginatedResponse<Game>
+      const result = (await res.json()) as PaginatedResponse<ProductWithGame>
 
-      return result.games
+      return result.itens
     },
   })
 
@@ -77,9 +78,11 @@ export default function Catalog() {
           ))}
 
         {!isPending &&
-          games?.map(game => <GameHorizontalCard key={game.id} game={game} />)}
+          products?.map(product => (
+            <GameHorizontalCard key={product.id} product={product} />
+          ))}
 
-        {!isPending && games?.length === 0 && (
+        {!isPending && products?.length === 0 && (
           <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center text-zinc-400">
             <SearchIcon className="w-12 h-12" />
             <p className="text-lg">No games found matching your search.</p>

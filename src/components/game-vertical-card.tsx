@@ -1,26 +1,28 @@
+import { formatCurrency } from '@/helpers/format-currency'
 import { Game } from '@/types/game'
+import { ProductWithGame } from '@/types/product'
 import { Gamepad2Icon } from 'lucide-react'
 import Link from 'next/link'
 
 type GameVerticalCardProps = {
-  game: Game
+  product: ProductWithGame
 }
 
-export function GameVerticalCard({ game }: GameVerticalCardProps) {
+export function GameVerticalCard({ product }: GameVerticalCardProps) {
   return (
     <Link
-      href={`product/${game.id}`}
-      className="w-full min-w-[150px] flex flex-col gap-2 active:scale-105 transition-transform duration-300 delay-200"
+      href={`product/${product.game.id}`}
+      className="w-full min-w-[150px] flex flex-col gap-2"
     >
       <div className="aspect-[3/4] overflow-hidden rounded-xl">
-        {game.imageUrl && (
+        {product.game.imageUrl && (
           <img
-            src={game.imageUrl}
+            src={product.game.imageUrl}
             alt="game"
             className="size-full object-cover"
           />
         )}
-        {!game.imageUrl && (
+        {!product.game.imageUrl && (
           <div className="size-full bg-zinc-950 flex items-center justify-center px-4">
             <Gamepad2Icon className="text-white size-full shrink-0" />
           </div>
@@ -29,19 +31,15 @@ export function GameVerticalCard({ game }: GameVerticalCardProps) {
 
       <div className="flex flex-col gap-1">
         <span className="text-base sm:text-lg font-bold text-white">
-          {game.title}
+          {product.game.title}
         </span>
 
         <p className="line-clamp-3 text-xs sm:text-sm text-zinc-400">
-          {game.description}
+          {product.game.description}
         </p>
 
         <span className="min-w-max text-sm sm:text-base text-white font-semibold">
-          {Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-            maximumFractionDigits: 2,
-          }).format(game.price)}
+          {formatCurrency(product.price)}
         </span>
       </div>
     </Link>
