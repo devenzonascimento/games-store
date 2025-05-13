@@ -68,7 +68,7 @@
 }
 
 *::-webkit-scrollbar {
-  @apply w-2 cursor-default;
+  @apply size-2 cursor-default;
 }
 
 *::-webkit-scrollbar-track {
