@@ -10,25 +10,26 @@ import {
   HeartIcon,
 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
-import { Game, PaginatedResponse, Topic } from '@/types/game'
+import { PaginatedResponse, Topic } from '@/types/game'
 import {
   GameVerticalCard,
   GameVerticalCardSkeleton,
 } from './game-vertical-card'
+import { ProductWithGame } from '@/types/product'
 
 export function GameCards() {
   const [activeTag, setActiveTag] = useState<Topic>('top-rated')
 
-  const { data: games, isPending } = useQuery({
-    queryKey: ['games', activeTag],
+  const { data: products, isPending } = useQuery({
+    queryKey: ['products', activeTag],
     queryFn: async () => {
       const url = `/api/igdb/games?topic=${activeTag}&page=${0}&limit=${30}`
 
       const res = await fetch(url)
 
-      const result = (await res.json()) as PaginatedResponse<Game>
+      const result = (await res.json()) as PaginatedResponse<ProductWithGame>
 
-      return result.games
+      return result.itens
     },
   })
 
@@ -80,7 +81,7 @@ export function GameCards() {
           ))}
 
         {!isPending &&
-          games?.map(game => <GameVerticalCard key={game.id} game={game} />)}
+          products?.map(product => <GameVerticalCard key={product.id} product={product} />)}
       </div>
     </section>
   )
