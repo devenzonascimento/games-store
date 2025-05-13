@@ -44,7 +44,6 @@ export function toGame(raw: IGDBRawGame): Game {
     id: raw.id,
     title: raw.name,
     description: raw.summary ?? '',
-    price: Math.floor(Math.random() * 200) + 50, // placeholder ou vindo de outro serviço
     platformsAvailable: raw.platforms ? groupByPlatform(raw.platforms) : [],
     imageUrl: raw.cover?.url.replace('t_thumb', 't_cover_big') ?? '',
     bannerUrl: raw.artworks?.[0]?.url.replace('t_thumb', 't_1080p'),
@@ -52,6 +51,6 @@ export function toGame(raw: IGDBRawGame): Game {
       s.url.replace('t_thumb', 't_screenshot_huge'),
     ),
     year,
-    category: raw.genres?.[0]?.name,
+    genres: raw.genres?.map(g => g.name),
   }
 }

@@ -37,20 +37,18 @@ export type Game = {
   id: number
   title: string
   description: string
-  price: number
   platformsAvailable: IGDBPlatform[]
   imageUrl: string // portrait
   bannerUrl?: string // paisagem principal
   gallery?: string[] // banners alternativos
   year?: number
-  category?: string
+  genres?: string[]
 }
 
 export type GameCard = {
   id: number
   title: string
   description: string
-  price: number
   imageUrl: string
 }
 
@@ -58,7 +56,6 @@ export type GameBanner = {
   id: number
   title: string
   description: string
-  price: number
   imageUrl: string
   platformsAvailable: IGDBPlatform[]
 }
@@ -73,5 +70,5 @@ export type GameCartItem = {
 export type PaginatedResponse<T> = {
   page: number
   limit: number
-  games: T[]
+  itens: T[]
 }

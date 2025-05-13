@@ -1,13 +1,31 @@
 // app/api/games/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import igdb from 'igdb-api-node'
-import { IGDBRawGame } from '@/types/game'
+import { Game, IGDBRawGame } from '@/types/game'
 import { toGame } from '@/helpers/igdb-game-parser'
+import { Product, ProductWithGame } from '@/types/product'
 
 async function fetchToken() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/igdb/auth`)
   const { access_token } = await res.json()
   return access_token as string
+}
+
+async function getProductByIgdbGameId(igdbGameId: number) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${igdbGameId}`
+
+  const res = await fetch(url)
+
+  const data: Product = await res.json()
+
+  return data
+}
+
+function mergeGameOnProduct(product: Product, game: Game): ProductWithGame {
+  return {
+    ...product,
+    game,
+  }
 }
 
 export async function GET(req: NextRequest) {
@@ -37,5 +55,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Game not found' }, { status: 404 })
   }
 
-  return NextResponse.json(toGame(raw))
+  const product = await getProductByIgdbGameId(raw.id)
+
+  const productWIthGame = mergeGameOnProduct(product, toGame(raw))
+
+  return NextResponse.json(productWIthGame)
 }

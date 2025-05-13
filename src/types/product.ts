@@ -1,22 +1,22 @@
-import { GameCartItem } from './game'
+import { Game } from './game'
 
 export enum DiscountType {
-  Percentage = 0,
-  Value = 1,
+  Percentage = 'PERCENTAGE',
+  Fixed = 'FIXED',
 }
 
 export type Product = {
   id: number
-  gameId: number
+  igdbId: number
   price: number
-  discount: number
+  discountValue: number
   discountType: DiscountType
 }
 
-export type ProductWithGame = {
+export type ProductWithGame<GameType = Game> = {
   id: number
   price: number
-  discount: number
+  discountValue: number
   discountType: DiscountType
-  game: GameCartItem
+  game: GameType
 }

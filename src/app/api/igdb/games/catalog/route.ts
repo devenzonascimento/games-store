@@ -1,12 +1,53 @@
 import { NextRequest, NextResponse } from 'next/server'
 import igdb from 'igdb-api-node'
-import { IGDBPlatform, IGDBRawGame } from '@/types/game'
+import { Game, IGDBPlatform, IGDBRawGame } from '@/types/game'
 import { toGame } from '@/helpers/igdb-game-parser'
+import { Product, ProductWithGame } from '@/types/product'
 
 async function fetchToken() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/igdb/auth`)
   const { access_token } = await res.json()
   return access_token as string
+}
+
+async function getProductsByIgdbGameIds(igdbGameIds: number[]) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      igdbIds: igdbGameIds,
+    }),
+  })
+
+  const data: Product[] = await res.json()
+
+  return data
+}
+
+function mergeGamesOnProducts(
+  products: Product[],
+  games: Game[],
+): ProductWithGame[] {
+  return games
+    .map(g => {
+      if (!products) {
+        return null
+      }
+
+      const product = products?.find(p => p.igdbId === g.id)
+
+      if (!product) {
+        return null
+      }
+
+      return {
+        ...product,
+        game: g,
+      }
+    })
+    .filter(p => p !== null)
 }
 
 export async function GET(req: NextRequest) {
@@ -56,6 +97,11 @@ export async function GET(req: NextRequest) {
       return r.data
     })
 
+  const products = await getProductsByIgdbGameIds(raw.map(r => r.id))
+
   const games = raw.map(toGame)
-  return NextResponse.json({ page, limit, games })
+
+  const productsWithGames = mergeGamesOnProducts(products, games)
+
+  return NextResponse.json({ page, limit, itens: productsWithGames })
 }
