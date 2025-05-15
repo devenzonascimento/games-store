@@ -30,8 +30,10 @@ export default function RootLayout({
   return (
     <QueryProvider>
       <Header />
-      <Sidebar />
-      {children}
+      <div className="flex-1 w-screen self-start flex overflow-hidden">
+        <Sidebar />
+        {children}
+      </div>
       <Cart />
       <NavBar />
       <Toaster />

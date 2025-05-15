@@ -63,7 +63,7 @@ function NavLink({ href, children, variant, className }: NavLinkProps) {
 export function Sidebar() {
   return (
     <aside className="max-lg:hidden w-44 h-full py-4 px-2 border-r border-r-zinc-600 bg-zinc-950">
-      <NavLink variant="sidebar" href="/">
+      <NavLink variant="sidebar" href="/store">
         <HomeIcon className="size-5" />
         <span>Home</span>
       </NavLink>
