@@ -7,19 +7,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  telephone String?
+  password  String
+  document  String   @unique
+  //Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //Relations
+  cart      Cart?
+  orders    Order[]
+}
+
 model Product {
   id            Int           @id @default(autoincrement())
-
   igdbId        Int           @unique
-
   price         Float
   discountType  DiscountType?
   discountValue Float?
-
+  //Timestamps
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+  //Relations
+  CartItem      CartItem[]
+  OrderItem     OrderItem[]
 
   @@index([igdbId])
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  //Timestamps
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  //Relations
+  user      User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  productId Int
+  platform  Int
+  //Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //Relations
+  cart      Cart     @relation(fields: [cartId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  status        Int
+  totalPrice    Float
+  totalDiscount Float
+  //Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  //Relations
+  user          User        @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id            Int      @id @default(autoincrement())
+  orderId       Int
+  productId     Int
+  price         Decimal
+  discountType  String?
+  discountValue Decimal?
+  platform      Int
+  //Timestamps
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  //Relations
+  order         Order    @relation(fields: [orderId], references: [id])
+  product       Product  @relation(fields: [productId], references: [id])
 }
 
 enum DiscountType {
