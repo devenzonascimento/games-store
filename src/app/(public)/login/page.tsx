@@ -1,13 +1,33 @@
-import React from 'react'
-import Link from 'next/link'
+'use client'
+
+import { useLayoutEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useFormState } from 'react-dom'
+import { loginAction } from '@/actions/login'
 import { HorseIcon } from '@/components/logo'
 import { LockKeyholeIcon, MailIcon } from 'lucide-react'
 import { Input } from '@/components/input'
+import Link from 'next/link'
 
 export default function LoginPage() {
+  const router = useRouter()
+
+  const [state, formAction, pending] = useFormState(loginAction, null)
+
+  useLayoutEffect(() => {
+    if (state?.success && state?.user) {
+      localStorage.setItem('user', JSON.stringify(state.user))
+
+      router.push('/')
+    }
+  }, [state, router])
+
   return (
     <div className="fixed inset-0 h-dvh w-dvw flex justify-center bg-zinc-950">
-      <form className="group relative z-10 flex-1 mt-44 px-4 flex flex-col items-center gap-6 sm:max-h-min sm:max-w-[500px] sm:py-4 sm:border sm:border-zinc-600 sm:rounded-lg sm:bg-white/5">
+      <form
+        action={formAction}
+        className="group relative z-10 flex-1 mt-44 px-4 flex flex-col items-center gap-6 sm:max-h-min sm:max-w-[500px] sm:py-4 sm:border sm:border-zinc-600 sm:rounded-lg sm:bg-white/5"
+      >
         <HorseIcon className="max-sm:hidden -z-10 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 blur-md w-10/12 h-auto fill-zinc-700" />
 
         <h1 className="text-xl font-semibold">
@@ -19,7 +39,7 @@ export default function LoginPage() {
         </p>
 
         <Input
-          id="email"
+          name="email"
           type="email"
           placeholder="Email"
           autoComplete="email"
@@ -29,22 +49,26 @@ export default function LoginPage() {
         />
 
         <Input
-          id="password"
+          name="password"
           type="password"
           placeholder="Password"
           autoComplete="current-password"
           Icon={LockKeyholeIcon}
           required
-          minLength={8}
-          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+          minLength={6}
         />
 
-        <Link
-          href="/"
-          className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg group-invalid:opacity-70 group-invalid:pointer-events-none"
+        {state?.error && (
+          <p className="self-start text-sm text-rose-500">{state.error}</p>
+        )}
+
+        <button
+          type="submit"
+          disabled={pending}
+          className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg group-invalid:opacity-70 group-invalid:pointer-events-none disabled:opacity-50"
         >
-          Login
-        </Link>
+          {pending ? 'Login...' : 'Login'}
+        </button>
 
         <p className="w-full text-start">
           Don't have an account?
