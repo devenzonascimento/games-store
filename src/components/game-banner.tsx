@@ -11,13 +11,13 @@ export function GameBanner({ product }: GameBannerProps) {
   return (
     <div className="relative h-auto w-full aspect-video border border-zinc-600 rounded-xl overflow-hidden">
       <img
-        src={product.game.imageUrl}
+        src={product.game.bannerUrl}
         alt="game"
         className="size-full object-cover"
       />
 
       <Link
-        href={`product/${product.game.id}`}
+        href={`/store/product/${product.game.id}`}
         className="absolute inset-0 size-full p-2 flex flex-col justify-between bg-gradient-to-b from-black/50 via-black/10 to-black/60"
       >
         <div className="self-end flex gap-1">
