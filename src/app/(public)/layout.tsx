@@ -27,7 +27,7 @@ export default function RootLayout({
         className="relative h-[100dvh] w-screen antialiased flex flex-col items-center bg-zinc-900"
         style={{ ...roboto.style }}
       >
-        <main className="flex-1 w-screen self-start flex overflow-hidden">
+        <main className="flex-1 w-screen self-start flex flex-col items-center overflow-hidden">
           {children}
         </main>
       </body>

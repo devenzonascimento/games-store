@@ -10,7 +10,7 @@ export function NavBar() {
   return (
     <nav className="lg:hidden w-full h-16 px-4 flex justify-center bg-zinc-950 border-t border-zinc-800">
       <div className="h-full w-full py-1 grid grid-cols-2">
-        <NavLink variant="navbar" href="/catalog">
+        <NavLink variant="navbar" href="/store/catalog">
           <LayoutGridIcon className="size-6" />
           <span>Catalog</span>
         </NavLink>
@@ -68,7 +68,7 @@ export function Sidebar() {
         <span>Home</span>
       </NavLink>
 
-      <NavLink variant="sidebar" href="/catalog">
+      <NavLink variant="sidebar" href="/store/catalog">
         <LayoutGridIcon className="size-5" />
         <span>Catalog</span>
       </NavLink>
