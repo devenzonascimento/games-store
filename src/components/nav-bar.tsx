@@ -15,7 +15,7 @@ export function NavBar() {
           <span>Catalog</span>
         </NavLink>
 
-        <NavLink variant="navbar" href="/">
+        <NavLink variant="navbar" href="/store">
           <HomeIcon className="size-6" />
           <span>Home</span>
         </NavLink>
