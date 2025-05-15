@@ -1,5 +1,9 @@
-import React from 'react'
-import Link from 'next/link'
+'use client'
+
+import { useLayoutEffect } from 'react'
+import { useFormState } from 'react-dom'
+import { useRouter } from 'next/navigation'
+import { registerAction } from '@/actions/register'
 import { HorseIcon } from '@/components/logo'
 import {
   LockKeyholeIcon,
@@ -9,11 +13,27 @@ import {
   IdCardIcon,
 } from 'lucide-react'
 import { Input } from '@/components/input'
+import Link from 'next/link'
 
 export default function RegisterPage() {
+  const router = useRouter()
+
+  const [state, formAction, pending] = useFormState(registerAction, null)
+
+  useLayoutEffect(() => {
+    if (state?.success && state?.user) {
+      localStorage.setItem('user', JSON.stringify(state.user))
+
+      router.push('/')
+    }
+  }, [state, router])
+
   return (
     <div className="fixed inset-0 h-dvh w-dvw flex sm:items-center justify-center bg-zinc-950">
-      <form className="group relative z-10 flex-1 px-4 py-6 flex flex-col items-center gap-6 sm:max-h-min sm:max-w-[500px] sm:py-4 sm:border sm:border-zinc-600 sm:rounded-lg sm:bg-white/5">
+      <form
+        action={formAction}
+        className="group relative z-10 flex-1 px-4 py-6 flex flex-col items-center gap-6 sm:max-h-min sm:max-w-[500px] sm:py-4 sm:border sm:border-zinc-600 sm:rounded-lg sm:bg-white/5"
+      >
         <HorseIcon className="max-sm:hidden -z-10 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 blur-md w-10/12 h-auto fill-zinc-700" />
 
         <h1 className="text-xl font-semibold">Create your account</h1>
@@ -23,7 +43,7 @@ export default function RegisterPage() {
         </p>
 
         <Input
-          id="name"
+          name="name"
           type="text"
           placeholder="Full Name"
           autoComplete="name"
@@ -33,7 +53,7 @@ export default function RegisterPage() {
         />
 
         <Input
-          id="email"
+          name="email"
           type="email"
           placeholder="Email"
           autoComplete="email"
@@ -43,9 +63,9 @@ export default function RegisterPage() {
         />
 
         <Input
-          id="cpf"
+          name="document"
           type="text"
-          placeholder="CPF"
+          placeholder="Document"
           Icon={IdCardIcon}
           required
           pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}"
@@ -53,44 +73,46 @@ export default function RegisterPage() {
         />
 
         <Input
-          id="phone"
+          name="telephone"
           type="tel"
           placeholder="Phone"
           Icon={PhoneIcon}
-          required
+          // required
           pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}"
           maxLength={15}
         />
 
         <Input
-          id="password"
+          name="password"
           type="password"
           placeholder="Password"
           autoComplete="new-password"
           Icon={LockKeyholeIcon}
           required
-          minLength={8}
-          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+          minLength={6}
         />
 
         <Input
-          id="confirmPassword"
+          name="confirmPassword"
           type="password"
           placeholder="Confirm Password"
           autoComplete="new-password"
           Icon={LockKeyholeIcon}
           required
-          minLength={8}
-          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+          minLength={6}
         />
 
-        <Link
-          // type="submit"
-          href="/login"
-          className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg group-invalid:opacity-70 group-invalid:pointer-events-none"
+        {state?.error && (
+          <p className="self-start text-sm text-rose-500">{state.error}</p>
+        )}
+
+        <button
+          type="submit"
+          disabled={pending}
+          className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg group-invalid:opacity-70 group-invalid:pointer-events-none disabled:opacity-50"
         >
-          Create Account
-        </Link>
+          {pending ? 'Creating account...' : 'Create Account'}
+        </button>
 
         <p className="w-full text-start">
           Already have an account?
