@@ -1,7 +1,6 @@
 'use client'
 
-import { useLayoutEffect } from 'react'
-import { useFormState } from 'react-dom'
+import { useActionState, useLayoutEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { registerAction } from '@/actions/register'
 import { HorseIcon } from '@/components/logo'
@@ -18,18 +17,18 @@ import Link from 'next/link'
 export default function RegisterPage() {
   const router = useRouter()
 
-  const [state, formAction, pending] = useFormState(registerAction, null)
+  const [state, formAction, pending] = useActionState(registerAction, null)
 
   useLayoutEffect(() => {
     if (state?.success && state?.user) {
       localStorage.setItem('user', JSON.stringify(state.user))
 
-      router.push('/')
+      router.push('/store')
     }
   }, [state, router])
 
   return (
-    <div className="fixed inset-0 h-dvh w-dvw flex sm:items-center justify-center bg-zinc-950">
+    <div className="h-dvh w-dvw flex sm:items-center justify-center bg-zinc-950">
       <form
         action={formAction}
         className="group relative z-10 flex-1 px-4 py-6 flex flex-col items-center gap-6 sm:max-h-min sm:max-w-[500px] sm:py-4 sm:border sm:border-zinc-600 sm:rounded-lg sm:bg-white/5"
