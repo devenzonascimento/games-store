@@ -1,6 +1,12 @@
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
 import '../globals.css'
+import { NavBar, Sidebar } from '@/components/nav-bar'
+
+import { Roboto } from 'next/font/google'
+import { QueryProvider } from '@/lib/query-client-provider'
+import { Header } from '@/components/header'
+import { Cart } from '@/components/cart'
+import { Toaster } from '@/components/ui/toaster'
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -27,9 +33,16 @@ export default function RootLayout({
         className="relative h-[100dvh] w-screen antialiased flex flex-col items-center bg-zinc-900"
         style={{ ...roboto.style }}
       >
-        <main className="flex-1 w-screen self-start flex overflow-hidden">
-          {children}
-        </main>
+        <QueryProvider>
+          <Header />
+          <div className="flex-1 w-screen self-start flex overflow-hidden">
+            <Sidebar />
+            {children}
+          </div>
+          <Cart />
+          <NavBar />
+          <Toaster  />
+        </QueryProvider>
       </body>
     </html>
   )

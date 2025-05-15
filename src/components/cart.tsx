@@ -25,7 +25,7 @@ export function Cart() {
     isCartOpen,
     closeCart,
   } = useCartStore()
-console.log(getTotalPrice())
+
   return (
     <Sheet open={isCartOpen} onOpenChange={closeCart}>
       <SheetContent className="w-[350px] sm:w-[540px] py-4 px-4 flex flex-col gap-6">
