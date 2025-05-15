@@ -13,7 +13,7 @@ export function GameHorizontalCard({ product }: GameHorizontalCardProps) {
   return (
     <div
       className="min-h-max grid grid-cols-[auto_1fr] bg-zinc-800 rounded-md shadow-lg shadow-black cursor-pointer"
-      onClick={() => router.push(`/product/${product.game.id}`)}
+      onClick={() => router.push(`/store/product/${product.game.id}`)}
     >
       <div className="h-24 aspect-[3/4] overflow-hidden rounded">
         <img

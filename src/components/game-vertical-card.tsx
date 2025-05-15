@@ -11,7 +11,7 @@ type GameVerticalCardProps = {
 export function GameVerticalCard({ product }: GameVerticalCardProps) {
   return (
     <Link
-      href={`product/${product.game.id}`}
+      href={`/store/product/${product.game.id}`}
       className="w-full min-w-[150px] flex flex-col gap-2"
     >
       <div className="aspect-[3/4] overflow-hidden rounded-xl">
