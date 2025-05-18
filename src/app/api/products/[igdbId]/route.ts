@@ -9,10 +9,10 @@ import {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { igdbId: string } },
+  { params }: { params: Promise<{ igdbId: string }> },
 ) {
-  const igdbId = Number.parseInt(params.igdbId)
-  
+  const igdbId = Number.parseInt((await params)?.igdbId)
+
   if (Number.isNaN(igdbId)) {
     return new Response(JSON.stringify({ error: 'Invalid IGDB ID' }), {
       status: 400,
