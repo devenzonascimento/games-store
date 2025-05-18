@@ -61,6 +61,13 @@ export default function LoginPage() {
           <p className="self-start text-sm text-rose-500">{state.error}</p>
         )}
 
+        <Link
+          href="/forgot-password"
+          className="self-start text-start underline"
+        >
+          Forgot password?
+        </Link>
+
         <button
           type="submit"
           disabled={pending}
