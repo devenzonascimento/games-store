@@ -28,17 +28,20 @@ export function Header() {
   }
 
   useLayoutEffect(() => {
-    const result = localStorage.getItem('user')
-
-    if (!result) {
-      router.push('/login')
-      return
+    const getCookie = (name: string) => {
+      const cookies = document.cookie.split('; ')
+      const cookie = cookies.find(c => c.startsWith(`${name}=`))
+      return cookie ? decodeURIComponent(cookie.split('=')[1]) : null
     }
 
-    const user: User = JSON.parse(result)
+    const result = getCookie('user_summary')
 
-    setUser(user)
-  }, [router])
+    if (result) {
+      const user: User = JSON.parse(result)
+
+      setUser(user)
+    }
+  }, [])
 
   return (
     <header className="p-2 w-full flex items-center justify-between min-h-16 bg-zinc-950 border-b border-b-zinc-600">
@@ -64,7 +67,7 @@ export function Header() {
               onClick={handleToggleLogoutDropdown}
               className="size-full flex items-center justify-center text-base font-bold text-white bg-zinc-700 rounded-full"
             >
-              EN
+              {user?.name.slice(0, 2).toUpperCase()}
             </button>
 
             {isOpen && (
@@ -74,11 +77,11 @@ export function Header() {
                   onMouseDown={() => setIsOpen(false)}
                 />
 
-                <div className="absolute top-full right-0 z-10 p-2 bg-zinc-700 rounded-md shadow-xl">
+                <div className="absolute top-full right-2 z-10 p-1 bg-zinc-700 rounded-md shadow-xl">
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="p-1 flex items-center gap-1"
+                    className="p-1 flex items-center gap-1 sm:hover:bg-zinc-600 rounded-md"
                   >
                     <LogOutIcon className="size-5 text-white shrink-0" />
                     Logout

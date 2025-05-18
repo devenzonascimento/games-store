@@ -34,15 +34,25 @@ export async function loginAction(formData: FormData) {
     return
   }
 
-  const token = await createAuthToken({
+  const userPayload = {
     id: user.id,
     name: user.name,
     email: user.email,
-  })
+  }
+
+  const token = await createAuthToken(userPayload)
+
   const cookiesResult = await cookies()
 
   cookiesResult.set('auth_token', token, {
     httpOnly: true,
+    secure: true,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 dias
+  })
+
+  cookiesResult.set('user_summary', JSON.stringify(userPayload), {
+    httpOnly: false,
     secure: true,
     path: '/',
     maxAge: 60 * 60 * 24 * 7, // 7 dias
