@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation'
 import { useLayoutEffect, useRef } from 'react'
 import { ProductWithGame } from '@/types/product'
 
-export default function Catalog() {
+export default function CatalogPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const search = searchParams.get('search') ?? ''
@@ -49,12 +49,18 @@ export default function Catalog() {
     } else {
       params.delete('search')
     }
-    
+
     router.push(`?${params.toString()}`)
   }
 
   const handleClearSearch = () => {
-    router.push('/store/catalog')
+    if (searchRef.current) {
+      searchRef.current.value = ''
+    }
+
+    if (search) {
+      router.push('/store/catalog')
+    }
   }
 
   return (
@@ -67,14 +73,17 @@ export default function Catalog() {
             type="text"
             defaultValue={search}
             placeholder="Search games..."
-            className="flex-1 bg-transparent text-base text-white placeholder:text-zinc-500 outline-none"
+            className="peer flex-1 bg-transparent text-base text-white placeholder:text-zinc-500 outline-none"
             onKeyDown={e => {
               if (e.key === 'Enter') {
                 handleSearch()
               }
             }}
           />
-          <XIcon onClick={handleClearSearch} />
+          <XIcon
+            className="peer-placeholder-shown:hidden"
+            onClick={handleClearSearch}
+          />
         </div>
       </section>
 
