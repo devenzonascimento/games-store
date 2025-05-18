@@ -52,7 +52,7 @@ export function Cart() {
                   price={item.price}
                   discount={item.discountValue}
                   discountType={item.discountType}
-                  onRemove={() => removeItem(item.id)}
+                  onRemove={() => removeItem(item.cartItemId)}
                 />
               ))}
             </div>

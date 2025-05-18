@@ -10,7 +10,7 @@ import { User } from '@/types/user'
 export function Header() {
   const router = useRouter()
 
-  const { openCart, getTotalItems } = useCartStore()
+  const { openCart, syncStore, getTotalItems } = useCartStore()
 
   const [user, setUser] = useState<User>()
   const [isOpen, setIsOpen] = useState(false)
@@ -27,7 +27,10 @@ export function Header() {
     router.push('/login')
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Deve executar apenas uma vez
   useLayoutEffect(() => {
+    syncStore()
+
     const getCookie = (name: string) => {
       const cookies = document.cookie.split('; ')
       const cookie = cookies.find(c => c.startsWith(`${name}=`))
