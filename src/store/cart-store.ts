@@ -11,7 +11,7 @@ type CartState = {
 
   items: CartItem[]
   syncStore: () => void
-  addItem: (product: CartItem) => void
+  addItem: (product: ProductWithGame<GameCartItem>) => void
   removeItem: (cartItemId: number) => void
   clearCart: () => void
   getTotalItems: () => number
