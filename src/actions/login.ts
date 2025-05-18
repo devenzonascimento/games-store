@@ -2,35 +2,51 @@
 
 import { compare } from 'bcrypt'
 import { prisma } from '@/lib/prisma'
+import { redirect } from 'next/navigation'
+import { createAuthToken } from '@/lib/auth'
+import { cookies } from 'next/headers'
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export async function loginAction(_: any, formData: FormData) {
+const dispatchError = (error: string) => {
+  redirect(`/login?error=${encodeURIComponent(error)}`)
+}
+
+export async function loginAction(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
-  try {
-    const user = await prisma.user.findUnique({
-      where: { email },
-      omit: {
-        createdAt: true,
-        updatedAt: true,
-      },
-    })
+  const user = await prisma.user.findUnique({
+    where: { email },
+    omit: {
+      createdAt: true,
+      updatedAt: true,
+    },
+  })
 
-    if (!user) {
-      return { error: 'Invalid credentials' }
-    }
-
-    const isPasswordValid = await compare(password, user.password)
-
-    if (!isPasswordValid) {
-      return { error: 'Invalid credentials' }
-    }
-    
-    const { password: _, ...userWithoutPassword } = user
-
-    return { success: true, user: userWithoutPassword }
-  } catch (error) {
-    return { error: 'Something went wrong' }
+  if (!user) {
+    dispatchError('Invalid credentials')
+    return
   }
+
+  const isPasswordValid = await compare(password, user.password)
+
+  if (!isPasswordValid) {
+    dispatchError('Invalid credentials')
+    return
+  }
+
+  const token = await createAuthToken({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  })
+  const cookiesResult = await cookies()
+
+  cookiesResult.set('auth_token', token, {
+    httpOnly: true,
+    secure: true,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 dias
+  })
+
+  redirect('/store')
 }
