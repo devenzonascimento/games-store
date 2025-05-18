@@ -1,3 +1,5 @@
+'use client'
+
 import { useRouter } from 'next/navigation'
 import { PlatformIcon } from './platform-icon'
 import { ProductWithGame } from '@/types/product'
@@ -29,7 +31,7 @@ export function GameHorizontalCard({ product }: GameHorizontalCardProps) {
         </span>
 
         <span className="text-sm font-medium text-zinc-300">
-          {product?.game.year} - {product?.game.genres}
+          {product?.game.year} - {product?.game.genres?.at(0)}
         </span>
 
         <div className="mt-auto flex justify-between items-end gap-2">

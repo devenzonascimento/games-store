@@ -1,6 +1,6 @@
 'use client'
 
-import { SearchIcon } from 'lucide-react'
+import { SearchIcon, XIcon } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { PaginatedResponse } from '@/types/game'
 import {
@@ -43,12 +43,18 @@ export default function Catalog() {
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams)
+
     if (searchRef.current?.value) {
       params.set('search', searchRef.current?.value)
     } else {
       params.delete('search')
     }
+    
     router.push(`?${params.toString()}`)
+  }
+
+  const handleClearSearch = () => {
+    router.push('/store/catalog')
   }
 
   return (
@@ -68,6 +74,7 @@ export default function Catalog() {
               }
             }}
           />
+          <XIcon onClick={handleClearSearch} />
         </div>
       </section>
 
