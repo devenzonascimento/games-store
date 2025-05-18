@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import { PlatformIcon } from './platform-icon'
-import { formatCurrency } from '@/helpers/format-currency'
 import { ProductWithGame } from '@/types/product'
+import { productPriceManager } from '@/helpers/product-price-manager'
 
 type GameBannerProps = {
   product: ProductWithGame
 }
 
 export function GameBanner({ product }: GameBannerProps) {
+  const { finalPrice } = productPriceManager(product)
+
   return (
     <div className="relative h-auto w-full aspect-video border border-zinc-600 rounded-xl overflow-hidden">
       <img
@@ -41,7 +43,7 @@ export function GameBanner({ product }: GameBannerProps) {
             </p>
 
             <span className="min-w-max text-white sm:text-lg font-semibold">
-              {formatCurrency(product.price)}
+              {finalPrice}
             </span>
           </div>
         </div>

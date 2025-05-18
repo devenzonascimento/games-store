@@ -1,5 +1,4 @@
-import { formatCurrency } from '@/helpers/format-currency'
-import { Game } from '@/types/game'
+import { productPriceManager } from '@/helpers/product-price-manager'
 import { ProductWithGame } from '@/types/product'
 import { Gamepad2Icon } from 'lucide-react'
 import Link from 'next/link'
@@ -9,6 +8,9 @@ type GameVerticalCardProps = {
 }
 
 export function GameVerticalCard({ product }: GameVerticalCardProps) {
+  const { hasDiscount, discount, originalPrice, finalPrice } =
+    productPriceManager(product)
+
   return (
     <Link
       href={`/store/product/${product.game.id}`}
@@ -38,9 +40,24 @@ export function GameVerticalCard({ product }: GameVerticalCardProps) {
           {product.game.description}
         </p>
 
-        <span className="min-w-max text-sm sm:text-base text-white font-semibold">
-          {formatCurrency(product.price)}
-        </span>
+        <div className="flex items-center gap-1">
+          {hasDiscount && (
+            <>
+              <div className="h-6 px-1 flex items-center justify-center rounded-full bg-emerald-800">
+                <span className="text-xs font-medium text-white">
+                  {discount}
+                </span>
+              </div>
+
+              <span className="mr-auto line-through text-sm text-zinc-500">
+                {originalPrice}
+              </span>
+            </>
+          )}
+          <span className="min-w-max text-sm sm:text-base text-white font-semibold">
+            {finalPrice}
+          </span>
+        </div>
       </div>
     </Link>
   )

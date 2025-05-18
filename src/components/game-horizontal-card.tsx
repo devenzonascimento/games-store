@@ -1,21 +1,21 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { PlatformIcon } from './platform-icon'
 import { ProductWithGame } from '@/types/product'
 import { formatCurrency } from '@/helpers/format-currency'
+import { productPriceManager } from '@/helpers/product-price-manager'
 
 type GameHorizontalCardProps = {
   product: ProductWithGame
 }
 
 export function GameHorizontalCard({ product }: GameHorizontalCardProps) {
-  const router = useRouter()
+  const { hasDiscount, discount, originalPrice, finalPrice } =
+    productPriceManager(product)
 
   return (
-    <div
+    <Link
+      href={`/store/product/${product.game.id}`}
       className="min-h-max grid grid-cols-[auto_1fr] bg-zinc-800 rounded-md shadow-lg shadow-black cursor-pointer"
-      onClick={() => router.push(`/store/product/${product.game.id}`)}
     >
       <div className="h-24 aspect-[3/4] overflow-hidden rounded">
         <img
@@ -45,12 +45,27 @@ export function GameHorizontalCard({ product }: GameHorizontalCardProps) {
             ))}
           </div>
 
-          <span className="min-w-max text-sm text-white font-semibold">
-            {formatCurrency(product.price)}
-          </span>
+          <div className="flex items-center gap-2">
+            {hasDiscount && (
+              <>
+                <div className="h-6 px-1.5 flex items-center justify-center rounded-full bg-emerald-800">
+                  <span className="text-xs font-medium text-white">
+                    {discount}
+                  </span>
+                </div>
+
+                <span className="mr-auto line-through text-sm text-zinc-500">
+                  {originalPrice}
+                </span>
+              </>
+            )}
+            <span className="min-w-max text-sm sm:text-base text-white font-semibold">
+              {finalPrice}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
