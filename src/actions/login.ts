@@ -46,14 +46,14 @@ export async function loginAction(formData: FormData) {
 
   cookiesResult.set('auth_token', token, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     path: '/',
     maxAge: 60 * 60 * 24 * 7, // 7 dias
   })
 
   cookiesResult.set('user_summary', JSON.stringify(userPayload), {
     httpOnly: false,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     path: '/',
     maxAge: 60 * 60 * 24 * 7, // 7 dias
   })
