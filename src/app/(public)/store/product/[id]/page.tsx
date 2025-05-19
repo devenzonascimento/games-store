@@ -2,14 +2,8 @@
 
 import { PlatformIcon } from '@/components/platform-icon'
 import { useCartStore } from '@/store/cart-store'
-import { Game, GameCartItem } from '@/types/game'
 import { useQuery } from '@tanstack/react-query'
-import {
-  Gamepad2Icon,
-  ShoppingCartIcon,
-  StarHalfIcon,
-  StarIcon,
-} from 'lucide-react'
+import { Gamepad2Icon, ShoppingCartIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import Loading from './loading'
 import { DiscountType, ProductWithGame } from '@/types/product'
@@ -17,12 +11,9 @@ import { toast } from '@/hooks/use-toast'
 import { ToastAction } from '@/components/ui/toast'
 import { formatCurrency } from '@/helpers/format-currency'
 import { formatPercentage } from '@/helpers/format-percentage'
+import { ScreenshotCarrousel } from './screenshots-carrousel'
 
-export default function ProductPage({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
+export default function ProductPage() {
   const { id } = useParams()
   const { openCart, addItem } = useCartStore()
 
@@ -52,21 +43,9 @@ export default function ProductPage({
           />
         </div>
 
-        <div className="flex flex-col items-center gap-4">
-          <h1 className="text-center text-2xl font-bold text-white">
-            {product.game.title}
-          </h1>
-          <div className="flex items-center gap-2">
-            <StarIcon className="size-6 fill-white stroke-1 shrink-0" />
-            <StarIcon className="size-6 fill-white stroke-1 shrink-0" />
-            <StarIcon className="size-6 fill-white stroke-1 shrink-0" />
-            <StarIcon className="size-6 fill-white stroke-1 shrink-0" />
-            <StarHalfIcon className="size-6 fill-white stroke-1 shrink-0" />
-            <span className="text-base font-semibold italic text-white">
-              4,5
-            </span>
-          </div>
-        </div>
+        <h1 className="text-center text-2xl font-bold text-white">
+          {product.game.title}
+        </h1>
 
         <div className="w-full flex items-center justify-center gap-4 px-4">
           {product.discountValue && (
@@ -104,8 +83,8 @@ export default function ProductPage({
           <button
             type="button"
             className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg sm:hover:opacity-70"
-            onClick={() => {
-              addItem({
+            onClick={async () => {
+              await addItem({
                 id: product.id,
                 price: product.price,
                 discountValue: product.discountValue,
@@ -140,7 +119,8 @@ export default function ProductPage({
                   platformsAvailable: product.game.platformsAvailable,
                 },
               })
-              toast({
+
+              const { dismiss } = toast({
                 title: 'Game added to cart!',
                 description: `${product.game.title} has been successfully added to your cart.`,
                 action: (
@@ -153,6 +133,8 @@ export default function ProductPage({
                   </ToastAction>
                 ),
               })
+
+              setTimeout(() => dismiss(), 1000)
             }}
           >
             <ShoppingCartIcon className="size-6 shrink-0" />
@@ -192,30 +174,17 @@ export default function ProductPage({
         </section>
 
         <section className="w-full flex flex-col gap-2">
-          <h2 className="text-xl font-semibold text-white">Description</h2>
+          <h2 className="text-xl font-semibold text-white">About the game</h2>
 
           <p className="ml-1 text-base text-zinc-300">
             {product.game.description}
           </p>
         </section>
 
-        <section className="w-full grid gap-2">
+        <section className="w-full grid grid-rows-[auto_1fr] grid-cols-1 gap-2">
           <h2 className="text-xl font-semibold text-white">Screenshots</h2>
 
-          <div className="w-full pb-2 flex items-center gap-1 overflow-x-auto">
-            {product.game.gallery?.map(screenshotUrl => (
-              <div
-                key={screenshotUrl}
-                className="min-w-[240px] aspect-video rounded-lg overflow-hidden"
-              >
-                <img
-                  src={screenshotUrl}
-                  alt="screenshot"
-                  className="size-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
+          <ScreenshotCarrousel screenshots={product.game.gallery ?? []} />
         </section>
       </div>
     </main>
