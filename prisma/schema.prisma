@@ -20,6 +20,8 @@ model User {
   //Relations
   cart      Cart?
   orders    Order[]
+
+  @@index([email])
 }
 
 model Product {
@@ -55,7 +57,6 @@ model CartItem {
   id        Int      @id @default(autoincrement())
   cartId    Int
   productId Int
-  platform  Int
   //Timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,7 +64,7 @@ model CartItem {
   cart      Cart     @relation(fields: [cartId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
 
-  @@unique([cartId, productId, platform])
+  @@unique([cartId, productId])
   @@index([cartId])
 }
 
@@ -88,7 +89,6 @@ model OrderItem {
   price         Decimal
   discountType  String?
   discountValue Decimal?
-  platform      Int
   //Timestamps
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
