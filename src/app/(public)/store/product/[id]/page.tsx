@@ -5,7 +5,6 @@ import { useCartStore } from '@/store/cart-store'
 import { useQuery } from '@tanstack/react-query'
 import { Gamepad2Icon, ShoppingCartIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
-import Loading from './loading'
 import { DiscountType, ProductWithGame } from '@/types/product'
 import { toast } from '@/hooks/use-toast'
 import { ToastAction } from '@/components/ui/toast'
@@ -29,7 +28,7 @@ export default function ProductPage() {
   })
 
   if (isPending || !product) {
-    return <Loading />
+    return <ProductLoading />
   }
 
   return (
@@ -188,5 +187,80 @@ export default function ProductPage() {
         </section>
       </div>
     </main>
+  )
+}
+
+function ProductLoading() {
+  return (
+    <div className="flex-1 bg-black/80 py-6 px-4 overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-start gap-6 md:max-w-[768px]">
+        <div className="min-h-[280px] aspect-[3/4] overflow-hidden rounded-xl">
+          <div className="w-[264px] h-[352px] bg-zinc-700 animate-pulse" />
+        </div>
+
+        <div className="h-8 w-7/12 bg-zinc-700 rounded-md animate-pulse" />
+
+        <div className="h-7 w-20 bg-zinc-700 rounded-md animate-pulse" />
+
+        <div className="w-full flex flex-col gap-4">
+          <div className="h-[46px] w-full bg-zinc-700 rounded-lg animate-pulse" />
+
+          <div className="h-[46px] w-full bg-zinc-700 rounded-lg animate-pulse" />
+        </div>
+
+        <div className="w-full flex flex-col gap-1">
+          <div className="h-7 w-44 bg-zinc-700 rounded-md animate-pulse" />
+
+          <div className="ml-0.5 flex items-center gap-1">
+            <div className="size-7 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="size-7 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="size-7 bg-zinc-700 rounded-md animate-pulse" />
+          </div>
+        </div>
+
+        <div className="w-full flex flex-col gap-1">
+          <div className="h-7 w-16 bg-zinc-700 rounded-md animate-pulse" />
+
+          <div className="ml-0.5 flex items-center gap-2">
+            <div className="h-8 w-36 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-8 w-20 bg-zinc-700 rounded-md animate-pulse" />
+          </div>
+        </div>
+
+        <div className="w-full flex flex-col gap-2">
+          <div className="h-7 w-36 bg-zinc-700 rounded-md animate-pulse" />
+
+          <div className="flex flex-col gap-1">
+            <div className="h-5 w-12/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-11/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-10/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-12/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-12/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-11/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-10/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-10/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-11/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-10/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-12/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-10/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-9/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-10/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-11/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-12/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-12/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-10/12 bg-zinc-700 rounded-md animate-pulse" />
+            <div className="h-5 w-11/12 bg-zinc-700 rounded-md animate-pulse" />
+          </div>
+        </div>
+
+        <div className="w-full flex flex-col gap-2">
+          <div className="h-7 w-28 bg-zinc-700 rounded-md animate-pulse" />
+
+          <div className="w-full aspect-video overflow-hidden rounded-xl">
+            <div className="size-full bg-zinc-700 animate-pulse" />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
