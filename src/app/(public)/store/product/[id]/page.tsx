@@ -3,7 +3,7 @@
 import { PlatformIcon } from '@/components/platform-icon'
 import { useCartStore } from '@/store/cart-store'
 import { useQuery } from '@tanstack/react-query'
-import { Gamepad2Icon, ShoppingCartIcon } from 'lucide-react'
+import { ArrowLeftIcon, Gamepad2Icon, ShoppingCartIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { DiscountType, ProductWithGame } from '@/types/product'
 import { toast } from '@/hooks/use-toast'
@@ -11,8 +11,10 @@ import { ToastAction } from '@/components/ui/toast'
 import { formatCurrency } from '@/helpers/format-currency'
 import { formatPercentage } from '@/helpers/format-percentage'
 import { ScreenshotCarrousel } from './screenshots-carrousel'
+import { useGoBack } from '@/hooks/use-go-back'
 
 export default function ProductPage() {
+  const { goBack } = useGoBack()
   const { id } = useParams()
   const { openCart, addItem } = useCartStore()
 
@@ -32,7 +34,11 @@ export default function ProductPage() {
   }
 
   return (
-    <main className="flex-1 flex flex-col items-center justify-start gap-6 py-6 px-4 bg-zinc-900 overflow-y-auto">
+    <main className="relative flex-1 flex flex-col items-center justify-start gap-6 py-6 px-4 bg-zinc-900 overflow-y-auto">
+      <ArrowLeftIcon
+        className="absolute top-2 left-2 size-8"
+        onClick={goBack}
+      />
       <div className="flex-1 flex flex-col items-center justify-start gap-6 md:max-w-[768px]">
         <div className="min-h-[280px] aspect-[3/4] overflow-hidden rounded-xl">
           <img
@@ -192,8 +198,8 @@ export default function ProductPage() {
 
 function ProductLoading() {
   return (
-    <div className="flex-1 bg-black/80 py-6 px-4 overflow-y-auto">
-      <div className="flex-1 flex flex-col items-center justify-start gap-6 md:max-w-[768px]">
+    <div className="flex-1 flex flex-col items-center py-6 px-4 overflow-y-auto">
+      <div className="w-full flex-1 flex flex-col items-center justify-start gap-6 md:max-w-[768px]">
         <div className="min-h-[280px] aspect-[3/4] overflow-hidden rounded-xl">
           <div className="w-[264px] h-[352px] bg-zinc-700 animate-pulse" />
         </div>
