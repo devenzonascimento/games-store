@@ -5,3 +5,10 @@ export type User = {
   telephone: string
   document: string
 }
+
+export type UserSummary = {
+  id: number
+  name: string
+  email: string
+  cartId: number
+}

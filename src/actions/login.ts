@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { createAuthToken } from '@/lib/auth'
 import { cookies } from 'next/headers'
+import { UserSummary } from '@/types/user'
 
 const dispatchError = (error: string) => {
   redirect(`/login?error=${encodeURIComponent(error)}`)
@@ -34,24 +35,27 @@ export async function loginAction(formData: FormData) {
     return
   }
 
-  const userPayload = {
+  const cartId = await getCartIdService(user.id)
+
+  const userSummary: UserSummary = {
     id: user.id,
     name: user.name,
     email: user.email,
+    cartId,
   }
 
-  const token = await createAuthToken(userPayload)
+  const token = await createAuthToken(userSummary)
 
-  const cookiesResult = await cookies()
+  const cookiesStore = await cookies()
 
-  cookiesResult.set('auth_token', token, {
+  cookiesStore.set('auth_token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     path: '/',
     maxAge: 60 * 60 * 24 * 7, // 7 dias
   })
 
-  cookiesResult.set('user_summary', JSON.stringify(userPayload), {
+  cookiesStore.set('user_summary', JSON.stringify(userSummary), {
     httpOnly: false,
     secure: process.env.NODE_ENV === 'production',
     path: '/',
@@ -59,4 +63,21 @@ export async function loginAction(formData: FormData) {
   })
 
   redirect('/store')
+}
+
+const getCartIdService = async (userId: number) => {
+  const cart = await prisma.cart.findUnique({
+    where: { userId },
+    select: { id: true },
+  })
+
+  if (!cart) {
+    const createdUserCart = await prisma.cart.create({
+      data: { userId },
+    })
+
+    return createdUserCart.id
+  }
+
+  return cart.id
 }
