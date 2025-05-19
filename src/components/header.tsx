@@ -6,6 +6,7 @@ import { Logo } from './logo'
 import { LogOutIcon, ShoppingCartIcon, UserPlus } from 'lucide-react'
 import { useLayoutEffect, useState } from 'react'
 import { User } from '@/types/user'
+import { logoutAction } from '@/actions/logout'
 
 export function Header() {
   const router = useRouter()
@@ -19,12 +20,6 @@ export function Header() {
 
   const handleToggleLogoutDropdown = () => {
     setIsOpen(isOpen => !isOpen)
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-
-    router.push('/login')
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Deve executar apenas uma vez
@@ -87,7 +82,7 @@ export function Header() {
                 <div className="absolute top-full right-2 z-10 p-1 bg-zinc-700 rounded-md shadow-xl">
                   <button
                     type="button"
-                    onClick={handleLogout}
+                    onClick={logoutAction}
                     className="p-1 flex items-center gap-1 sm:hover:bg-zinc-600 rounded-md"
                   >
                     <LogOutIcon className="size-5 text-white shrink-0" />
