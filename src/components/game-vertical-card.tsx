@@ -32,14 +32,14 @@ export function GameVerticalCard({ product }: GameVerticalCardProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <span className="text-base sm:text-lg font-bold text-white">
+        <span className="text-base leading-4 sm:text-lg sm:leading-5 font-bold text-white">
           {product.game.title}
         </span>
 
         <div className="flex items-center gap-1">
           {hasDiscount && (
             <>
-              <div className="h-6 px-1 flex items-center justify-center rounded-full bg-emerald-800">
+              <div className="h-6 px-1.5 flex items-center justify-center rounded-full bg-emerald-800">
                 <span className="text-xs sm:text-sm font-medium text-white">
                   {discount}
                 </span>
