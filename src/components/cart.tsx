@@ -46,7 +46,7 @@ export function Cart() {
                 <CartItem
                   key={item.cartItemId}
                   product={item as ProductWithGame}
-                  onRemove={() => removeItem(item.cartItemId)}
+                  onRemove={() => removeItem(item.id)}
                 />
               ))}
             </div>
@@ -127,7 +127,7 @@ export function CartItem({ product, onRemove }: CartItemProps) {
       </div>
 
       <div className="py-1 flex flex-col gap-1">
-        <header className="flex items-center justify-between">
+        <header className="flex items-start justify-between">
           <h2 className="text-base font-bold text-white">
             {product.game.title}
           </h2>

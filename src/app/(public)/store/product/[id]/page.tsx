@@ -16,7 +16,7 @@ import { useGoBack } from '@/hooks/use-go-back'
 export default function ProductPage() {
   const { goBack } = useGoBack()
   const { id } = useParams()
-  const { openCart, addItem } = useCartStore()
+  const { openCart, addItem, removeItem, alreadyIntoCart } = useCartStore()
 
   const { data: product, isPending } = useQuery({
     queryKey: ['game', id],
@@ -29,6 +29,45 @@ export default function ProductPage() {
     },
     staleTime: Number.POSITIVE_INFINITY,
   })
+
+  const handleAddItemToCart = () => {
+    if (!product || alreadyIntoCart(product?.id)) {
+      return
+    }
+
+    addItem(product)
+
+    const { dismiss } = toast({
+      title: 'Game added to cart!',
+      description: `${product.game.title} has been successfully added to your cart.`,
+      action: (
+        <ToastAction
+          altText="Go to cart"
+          onClick={openCart}
+          onMouseDown={openCart}
+        >
+          View Cart
+        </ToastAction>
+      ),
+    })
+
+    setTimeout(() => dismiss(), 2000)
+  }
+
+  const handleRemoveItemToCart = () => {
+    if (!product || !alreadyIntoCart(product?.id)) {
+      return
+    }
+
+    removeItem(product.id)
+
+    const { dismiss } = toast({
+      title: 'Game removed from cart!',
+      description: `${product.game.title} has been successfully removed from your cart.`,
+    })
+
+    setTimeout(() => dismiss(), 2000)
+  }
 
   if (isPending || !product) {
     return <ProductLoading />
@@ -90,18 +129,7 @@ export default function ProductPage() {
             type="button"
             className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg sm:hover:opacity-70"
             onClick={async () => {
-              await addItem({
-                id: product.id,
-                price: product.price,
-                discountValue: product.discountValue,
-                discountType: product.discountType,
-                game: {
-                  id: product.id,
-                  title: product.game.title,
-                  imageUrl: product.game.imageUrl,
-                  platformsAvailable: product.game.platformsAvailable,
-                },
-              })
+              await addItem(product)
               openCart()
             }}
           >
@@ -113,38 +141,16 @@ export default function ProductPage() {
             type="button"
             className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-transparent border border-white rounded-lg sm:hover:opacity-70"
             onClick={() => {
-              addItem({
-                id: product.id,
-                price: product.price,
-                discountValue: product.discountValue,
-                discountType: product.discountType,
-                game: {
-                  id: product.id,
-                  title: product.game.title,
-                  imageUrl: product.game.imageUrl,
-                  platformsAvailable: product.game.platformsAvailable,
-                },
-              })
+              if (alreadyIntoCart(product.id)) {
+                handleRemoveItemToCart()
+                return
+              }
 
-              const { dismiss } = toast({
-                title: 'Game added to cart!',
-                description: `${product.game.title} has been successfully added to your cart.`,
-                action: (
-                  <ToastAction
-                    altText="Go to cart"
-                    onClick={openCart}
-                    onMouseDown={openCart}
-                  >
-                    View Cart
-                  </ToastAction>
-                ),
-              })
-
-              setTimeout(() => dismiss(), 1000)
+              handleAddItemToCart()
             }}
           >
             <ShoppingCartIcon className="size-6 shrink-0" />
-            Add to cart
+            {alreadyIntoCart(product.id) ? 'Remove to cart' : 'Add to cart'}
           </button>
         </div>
 

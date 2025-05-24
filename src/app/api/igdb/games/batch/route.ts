@@ -58,14 +58,14 @@ export async function POST(req: NextRequest) {
     if (!Array.isArray(ids) || ids.length === 0) {
       return NextResponse.json(
         { error: 'Invalid request: ids must be a non-empty array' },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
-    if (ids.length > 10) {
+    if (ids.length > 20) {
       return NextResponse.json(
-        { error: 'Too many ids requested. Maximum is 10.' },
-        { status: 400 }
+        { error: 'Too many ids requested. Maximum is 20.' },
+        { status: 400 },
       )
     }
 
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
     console.error('Batch games fetch error:', error)
     return NextResponse.json(
       { error: 'Failed to fetch games' },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }

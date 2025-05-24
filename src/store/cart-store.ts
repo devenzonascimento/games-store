@@ -10,8 +10,9 @@ type CartState = {
 
   items: CartItem[]
   syncStore: () => void
+  alreadyIntoCart: (productId: number) => boolean
   addItem: (product: ProductWithGame) => void
-  removeItem: (cartItemId: number) => void
+  removeItem: (productId: number) => void
   clearCart: () => void
   getTotalItems: () => number
   getTotalPrice: () => number
@@ -53,6 +54,7 @@ export const useCartStore = create<CartState>()((set, get) => ({
 
     set({ items })
   },
+  alreadyIntoCart: productId => get().items.some(i => i.id === productId),
   addItem: async product => {
     const items = get().items
     const existingItem = items.find(i => i.id === product.id)
@@ -74,7 +76,9 @@ export const useCartStore = create<CartState>()((set, get) => ({
       }
     }
   },
-  removeItem: async cartItemId => {
+  removeItem: async productId => {
+    const cartItemId = get().items.find(i => i.id === productId)?.cartItemId
+
     const success = (await fetch('/api/cart/remove', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
