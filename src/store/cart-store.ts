@@ -1,8 +1,7 @@
-import { GameCartItem } from '@/types/game'
 import { DiscountType, ProductWithGame } from '@/types/product'
 import { create } from 'zustand'
 
-type CartItem = ProductWithGame<GameCartItem> & { cartItemId: number }
+type CartItem = ProductWithGame & { cartItemId: number }
 
 type CartState = {
   isCartOpen: boolean
@@ -11,7 +10,7 @@ type CartState = {
 
   items: CartItem[]
   syncStore: () => void
-  addItem: (product: ProductWithGame<GameCartItem>) => void
+  addItem: (product: ProductWithGame) => void
   removeItem: (cartItemId: number) => void
   clearCart: () => void
   getTotalItems: () => number
@@ -113,9 +112,9 @@ export const useCartStore = create<CartState>()((set, get) => ({
       }
 
       if (i.discountType === DiscountType.Percentage) {
-        return acc + (i.price * i.discountValue) / 100
+        return acc + (i.price / 100) * i.discountValue
       }
 
-      return acc + i.price
+      return acc + i.discountValue
     }, 0),
 }))
