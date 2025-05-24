@@ -35,10 +35,10 @@ export default function ProductPage() {
 
   return (
     <main className="relative flex-1 flex flex-col items-center justify-start gap-6 py-6 px-4 bg-zinc-900 overflow-y-auto">
-      <ArrowLeftIcon
-        className="absolute top-2 left-2 size-8"
-        onClick={goBack}
-      />
+      <button type="button" onClick={goBack}>
+        <ArrowLeftIcon className="absolute top-2 left-2 size-8" />
+      </button>
+      
       <div className="flex-1 flex flex-col items-center justify-start gap-6 md:max-w-[768px]">
         <div className="min-h-[280px] aspect-[3/4] overflow-hidden rounded-xl">
           <img
