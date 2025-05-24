@@ -31,6 +31,7 @@ export function GameCards() {
 
       return result.itens
     },
+    staleTime: Number.POSITIVE_INFINITY,
   })
 
   return (

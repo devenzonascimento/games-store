@@ -21,19 +21,28 @@ export function GameBannersCarousel() {
   const { data: products, isPending } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const url = `/api/igdb/games?page=${0}&limit=${5}`
+      const res = await fetch('/api/igdb/games/banners')
 
-      const res = await fetch(url)
+      const result = (await res.json()) as ProductWithGame[]
 
-      const result = (await res.json()) as PaginatedResponse<ProductWithGame>
-
-      return result.itens
+      return result
     },
+    staleTime: Number.POSITIVE_INFINITY,
   })
+
+  useEffect(() => {
+    const ref = setInterval(() => {
+      if (api) {
+        api.scrollTo(selectedIndex + 1)
+      }
+    }, 4500)
+
+    return () => clearInterval(ref)
+  }, [selectedIndex, api])
 
   if (isPending || !products) {
     return (
-      <div className="w-full h-auto aspect-video flex flex-col gap-2 bg-zinc-700 animate-pulse rounded-xl" />
+      <div className="w-full h-auto aspect-video xl:aspect-[3/1] flex flex-col gap-2 bg-zinc-700 animate-pulse rounded-xl" />
     )
   }
 

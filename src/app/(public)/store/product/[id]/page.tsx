@@ -27,6 +27,7 @@ export default function ProductPage() {
 
       return product
     },
+    staleTime: Number.POSITIVE_INFINITY,
   })
 
   if (isPending || !product) {

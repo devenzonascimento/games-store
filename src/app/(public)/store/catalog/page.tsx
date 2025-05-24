@@ -31,6 +31,7 @@ export default function CatalogPage() {
 
       return result.itens
     },
+    staleTime: Number.POSITIVE_INFINITY,
   })
 
   useLayoutEffect(() => {
