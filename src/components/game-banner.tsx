@@ -11,7 +11,7 @@ export function GameBanner({ product }: GameBannerProps) {
   const { finalPrice } = productPriceManager(product)
 
   return (
-    <div className="relative h-auto w-full aspect-video border border-zinc-600 rounded-xl overflow-hidden">
+    <div className="relative h-auto w-full aspect-video xl:aspect-[3/1] border border-zinc-600 rounded-xl overflow-hidden">
       <img
         src={product.game.bannerUrl}
         alt="game"
