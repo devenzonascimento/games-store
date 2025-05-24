@@ -37,12 +37,12 @@ export function GameBanner({ product }: GameBannerProps) {
             {product.game.title}
           </span>
 
-          <div className="flex gap-2 items-end">
-            <p className="line-clamp-2 text-xs text-zinc-400 sm:text-sm">
+          <div className="w-full flex gap-2 items-end">
+            <p className="xl:w-6/12 line-clamp-2 xl:line-clamp-4 text-xs text-zinc-400 sm:text-sm">
               {product.game.description}
             </p>
 
-            <span className="min-w-max text-white sm:text-lg font-semibold">
+            <span className="ml-auto p-1 bg-black/40 rounded-xl min-w-max text-white sm:text-lg font-semibold">
               {finalPrice}
             </span>
           </div>

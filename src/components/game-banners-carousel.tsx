@@ -59,7 +59,7 @@ export function GameBannersCarousel() {
           {products.map(product => (
             <CarouselItem
               key={product.id}
-              className="sm:basis-9/12 md:basis-8/12 lg:basis-10/12 xl:basis-full"
+              className="sm:basis-9/12 md:basis-8/12 lg:basis-10/12 xl:basis-full rounded-xl"
             >
               <GameBanner product={product} />
             </CarouselItem>

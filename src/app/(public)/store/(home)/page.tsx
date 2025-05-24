@@ -31,7 +31,7 @@ export default async function HomePage() {
       <section className="w-full max-w-[1240px] py-2 px-4 flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <FlameIcon className="fill-amber-500 text-red-500" />
-          <h2 className="text-xl font-medium text-zinc-200">Destaques</h2>
+          <h2 className="text-xl font-medium text-zinc-200">Trending games</h2>
         </div>
         <GameBannersCarousel />
       </section>
