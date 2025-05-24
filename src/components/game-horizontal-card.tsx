@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { PlatformIcon } from './platform-icon'
 import { ProductWithGame } from '@/types/product'
-import { formatCurrency } from '@/helpers/format-currency'
 import { productPriceManager } from '@/helpers/product-price-manager'
 
 type GameHorizontalCardProps = {

@@ -11,9 +11,9 @@ import {
 import { IGDBPlatform } from '@/types/game'
 import { PlatformIcon } from './platform-icon'
 import { useCartStore } from '@/store/cart-store'
-import { DiscountType } from '@/types/product'
-import { formatPercentage } from '@/helpers/format-percentage'
+import { ProductWithGame } from '@/types/product'
 import { formatCurrency } from '@/helpers/format-currency'
+import { productPriceManager } from '@/helpers/product-price-manager'
 
 export function Cart() {
   const {
@@ -44,14 +44,8 @@ export function Cart() {
             <div className="flex flex-col gap-4 overflow-y-auto no-scrollbar">
               {items.map(item => (
                 <CartItem
-                  key={item.id}
-                  id={item.game.id}
-                  title={item.game.title}
-                  imageUrl={item.game.imageUrl}
-                  platform={item.game.platformsAvailable?.[0]}
-                  price={item.price}
-                  discount={item.discountValue}
-                  discountType={item.discountType}
+                  key={item.cartItemId}
+                  product={item as ProductWithGame}
                   onRemove={() => removeItem(item.cartItemId)}
                 />
               ))}
@@ -114,39 +108,29 @@ export function Cart() {
 }
 
 type CartItemProps = {
-  id: number
-  title: string
-  imageUrl: string
-  platform: IGDBPlatform
-  price: number
-  discount: number
-  discountType: DiscountType
+  product: ProductWithGame
   onRemove: () => void
 }
 
-export function CartItem({
-  title,
-  imageUrl,
-  platform,
-  price,
-  discount,
-  discountType,
-  onRemove,
-}: CartItemProps) {
-  const finalPrice =
-    discountType === DiscountType.Percentage
-      ? price - price * discount
-      : price - discount
+export function CartItem({ product, onRemove }: CartItemProps) {
+  const { hasDiscount, discount, originalPrice, finalPrice } =
+    productPriceManager(product)
 
   return (
     <div className="w-full grid grid-cols-[auto_1fr] gap-2">
       <div className="w-20 aspect-[3/4] overflow-hidden rounded">
-        <img src={imageUrl} alt={title} className="size-full object-cover" />
+        <img
+          src={product.game.imageUrl}
+          alt={product.game.title}
+          className="size-full object-cover"
+        />
       </div>
 
       <div className="py-1 flex flex-col gap-1">
         <header className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-white">{title}</h2>
+          <h2 className="text-base font-bold text-white">
+            {product.game.title}
+          </h2>
 
           <button
             type="button"
@@ -159,36 +143,31 @@ export function CartItem({
 
         <div className="flex items-center gap-1">
           <PlatformIcon
-            platform={platform}
+            platform={product.game.platformsAvailable?.[0]}
             className="size-4 text-white fill-white shrink-0"
           />
-          <span className="text-xs">{IGDBPlatform[platform]}</span>
+          <span className="text-xs">
+            {IGDBPlatform[product.game.platformsAvailable?.[0]]}
+          </span>
         </div>
 
         <div className="mt-auto w-full flex items-center gap-2">
-          {discount && (
+          {hasDiscount && (
             <>
               <div className="h-4 px-1.5 flex items-center justify-center rounded-full bg-emerald-800">
-                {discountType === DiscountType.Percentage && (
-                  <span className="text-xs font-medium text-white">
-                    {formatPercentage(-discount)}
-                  </span>
-                )}
-
-                {discountType === DiscountType.Fixed && (
-                  <span className="text-xs font-medium text-white">
-                    {formatCurrency(-discount)}
-                  </span>
-                )}
+                <span className="text-xs font-medium text-white">
+                  {discount}
+                </span>
               </div>
+
               <span className="mr-auto line-through text-sm text-zinc-500">
-                {formatCurrency(price)}
+                {originalPrice}
               </span>
             </>
           )}
 
-          <span className="text-base font-bold text-white">
-            {formatCurrency(finalPrice)}
+          <span className="ml-auto min-w-max text-sm sm:text-base text-white font-semibold">
+            {finalPrice}
           </span>
         </div>
       </div>
