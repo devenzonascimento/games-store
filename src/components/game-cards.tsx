@@ -9,29 +9,52 @@ import {
   GamepadIcon,
   HeartIcon,
 } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import { PaginatedResponse, Topic } from '@/types/game'
 import {
   GameVerticalCard,
   GameVerticalCardSkeleton,
 } from './game-vertical-card'
 import { ProductWithGame } from '@/types/product'
+import { usePopulateProductsCache } from '@/hooks/use-populate-products-cache'
 
 export function GameCards() {
   const [activeTag, setActiveTag] = useState<Topic>('top-rated')
 
+  const { populateCache } = usePopulateProductsCache()
+
+  const fetchProducts = async (topic: string) => {
+    const url = `/api/igdb/games?topic=${topic}&page=${0}&limit=${30}`
+
+    const res = await fetch(url)
+
+    const result = (await res.json()) as PaginatedResponse<ProductWithGame>
+
+    populateCache(result.itens)
+
+    return result.itens
+  }
+
+  useQueries({
+    queries: [
+      'top-rated',
+      'best-sellers',
+      'new-releases',
+      'most-played',
+      'most-wishlisted',
+      'coming-soon',
+    ].map(topic => ({
+      queryKey: ['products', topic],
+      queryFn: () => fetchProducts(topic),
+      staleTime: Number.POSITIVE_INFINITY,
+    })),
+  })
+
   const { data: products, isPending } = useQuery({
     queryKey: ['products', activeTag],
-    queryFn: async () => {
-      const url = `/api/igdb/games?topic=${activeTag}&page=${0}&limit=${30}`
-
-      const res = await fetch(url)
-
-      const result = (await res.json()) as PaginatedResponse<ProductWithGame>
-
-      return result.itens
-    },
+    queryFn: (): ProductWithGame[] | undefined => undefined,
     staleTime: Number.POSITIVE_INFINITY,
+    experimental_prefetchInRender: true,
   })
 
   return (
@@ -82,7 +105,9 @@ export function GameCards() {
           ))}
 
         {!isPending &&
-          products?.map(product => <GameVerticalCard key={product.id} product={product} />)}
+          products?.map(product => (
+            <GameVerticalCard key={product.id} product={product} />
+          ))}
       </div>
     </section>
   )

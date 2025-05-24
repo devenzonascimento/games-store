@@ -10,13 +10,15 @@ import {
 } from '@/components/ui/carousel'
 import { EmblaCarouselType } from 'embla-carousel'
 import { GameBanner } from '@/components/game-banner'
-import { PaginatedResponse } from '@/types/game'
 import { useQuery } from '@tanstack/react-query'
 import { ProductWithGame } from '@/types/product'
+import { usePopulateProductsCache } from '@/hooks/use-populate-products-cache'
 
 export function GameBannersCarousel() {
   const [api, setApi] = useState<CarouselApi>()
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api)
+
+  const { populateCache } = usePopulateProductsCache()
 
   const { data: products, isPending } = useQuery({
     queryKey: ['products'],
@@ -24,6 +26,8 @@ export function GameBannersCarousel() {
       const res = await fetch('/api/igdb/games/banners')
 
       const result = (await res.json()) as ProductWithGame[]
+
+      populateCache(result)
 
       return result
     },

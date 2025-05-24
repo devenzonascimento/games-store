@@ -11,13 +11,15 @@ import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useLayoutEffect, useRef } from 'react'
 import { ProductWithGame } from '@/types/product'
+import { usePopulateProductsCache } from '@/hooks/use-populate-products-cache'
 
 export default function CatalogPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const search = searchParams.get('search') ?? ''
 
-  // TODO: Talvez implementar um InfiniteQuery
+  const { populateCache } = usePopulateProductsCache()
+
   const { data: products, isPending } = useQuery({
     queryKey: ['products', search],
     queryFn: async () => {
@@ -28,6 +30,8 @@ export default function CatalogPage() {
       const res = await fetch(url)
 
       const result = (await res.json()) as PaginatedResponse<ProductWithGame>
+
+      populateCache(result.itens)
 
       return result.itens
     },
