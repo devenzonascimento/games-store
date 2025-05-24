@@ -12,12 +12,7 @@ export const usePopulateProductsCache = () => {
           if (oldData) {
             return oldData
           }
-
-          console.log(
-            'Populating cache for product:',
-            product.game?.id,
-            product.game?.title,
-          )
+          
           return product
         },
       )

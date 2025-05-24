@@ -9,7 +9,7 @@ import { useNavigationStore } from '@/store/navigation-store'
 
 export function NavBar() {
   return (
-    <nav className="lg:hidden w-full h-16 px-4 flex justify-center bg-zinc-950 border-t border-zinc-800">
+    <nav className="lg:hidden w-full h-16 px-4 flex justify-center bg-zinc-950 border-t border-zinc-800 touch-none">
       <div className="h-full w-full py-1 grid grid-cols-2 items-center justify-items-center">
         <NavLink variant="navbar" href="/store/catalog">
           <LayoutGridIcon className="size-6" />

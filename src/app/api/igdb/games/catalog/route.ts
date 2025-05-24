@@ -92,10 +92,7 @@ export async function GET(req: NextRequest) {
     .limit(limit)
     .offset(offset)
     .request('/games')
-    .then(r => {
-      console.log(r)
-      return r.data
-    })
+    .then(r => r.data)
 
   const products = await getProductsByIgdbGameIds(raw.map(r => r.id))
 
