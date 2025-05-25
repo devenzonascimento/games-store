@@ -40,8 +40,6 @@ export async function registerAction(_: any, formData: FormData) {
       },
       omit: {
         password: true,
-        createdAt: true,
-        updatedAt: true,
       },
     })
 

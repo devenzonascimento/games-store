@@ -17,10 +17,6 @@ export async function loginAction(formData: FormData) {
 
   const user = await prisma.user.findUnique({
     where: { email },
-    omit: {
-      createdAt: true,
-      updatedAt: true,
-    },
   })
 
   if (!user) {
