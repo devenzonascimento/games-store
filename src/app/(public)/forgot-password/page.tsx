@@ -1,4 +1,3 @@
-// src/app/(public)/forgot-password/page.tsx
 import { HorseIcon } from '@/components/logo'
 import { MailIcon } from 'lucide-react'
 import { Input } from '@/components/input'

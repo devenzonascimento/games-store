@@ -76,7 +76,6 @@ export default function RegisterPage() {
           type="tel"
           placeholder="Phone"
           Icon={PhoneIcon}
-          // required
           pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}"
           maxLength={15}
         />

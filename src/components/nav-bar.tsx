@@ -48,7 +48,7 @@ type NavLinkProps = {
 
 function NavLink({ href, children, variant, className }: NavLinkProps) {
   const pathname = usePathname()
-  const isActive = pathname === href // || pathname.startsWith(`${href}/`)
+  const isActive = pathname === href
 
   const { currentPath, previousPath } = useNavigationStore()
 

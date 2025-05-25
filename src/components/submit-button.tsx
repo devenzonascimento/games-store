@@ -1,4 +1,3 @@
-// src/components/submit-button.tsx
 'use client'
 
 import { useFormStatus } from 'react-dom'

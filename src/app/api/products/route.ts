@@ -18,14 +18,12 @@ export async function POST(req: NextRequest) {
 
   const uniqueIgdbIds = [...new Set(igdbIds.filter(id => Number.isInteger(id)))]
 
-  // Buscar os produtos já existentes
   const existingProducts = await prisma.product.findMany({
     where: { igdbId: { in: uniqueIgdbIds } },
   })
 
   const existingMap = new Map(existingProducts.map(p => [p.igdbId, p]))
 
-  // Gerar os produtos faltantes
   const toCreate = uniqueIgdbIds
     .filter(id => !existingMap.has(id))
     .map(igdbId => {

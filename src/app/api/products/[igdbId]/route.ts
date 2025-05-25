@@ -1,5 +1,3 @@
-// app/api/products/[igdbId]/route.ts
-
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import {

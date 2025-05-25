@@ -119,11 +119,9 @@ export function Cart() {
               type="button"
               className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70 disabled:opacity-50"
               onClick={handleCreateOrder}
-              // disabled={isGeneratingOrder}
             >
               <BanknoteIcon className="size-6 shrink-0" />
               Generate order
-              {/* {isGeneratingOrder ? 'Generating order...' : 'Generate order'} */}
             </button>
           </>
         )}

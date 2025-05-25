@@ -1,5 +1,4 @@
-// app/api/igdb/auth/route.ts
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 const TWITCH_TOKEN_URL = 'https://id.twitch.tv/oauth2/token'
 

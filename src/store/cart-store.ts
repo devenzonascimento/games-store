@@ -34,7 +34,6 @@ export const useCartStore = create<CartState>()((set, get) => ({
       return
     }
 
-    // Exemplo de uso
     const response = await fetch('/api/igdb/games/batch', {
       method: 'POST',
       headers: {

@@ -1,4 +1,3 @@
-// src/app/api/igdb/games/batch/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import igdb from 'igdb-api-node'
 import { Game, IGDBRawGame } from '@/types/game'

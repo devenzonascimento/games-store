@@ -1,4 +1,3 @@
-// types/igdb.ts
 export type Topic =
   | 'top-rated'
   | 'best-sellers'
@@ -57,28 +56,6 @@ export type Game = {
   gallery?: string[] // banners alternativos
   year?: number
   genres?: string[]
-}
-
-export type GameCard = {
-  id: number
-  title: string
-  description: string
-  imageUrl: string
-}
-
-export type GameBanner = {
-  id: number
-  title: string
-  description: string
-  imageUrl: string
-  platformsAvailable: IGDBPlatform[]
-}
-
-export type GameCartItem = {
-  id: number
-  title: string
-  imageUrl: string
-  platformsAvailable: IGDBPlatform[]
 }
 
 export type PaginatedResponse<T> = {
