@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Tag } from './tag'
 import {
   TrophyIcon,
@@ -9,7 +9,7 @@ import {
   GamepadIcon,
   HeartIcon,
 } from 'lucide-react'
-import { useQueries, useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { PaginatedResponse, Topic } from '@/types/game'
 import {
   GameVerticalCard,
@@ -23,39 +23,58 @@ export function GameCards() {
 
   const { populateCache } = usePopulateProductsCache()
 
-  const fetchProducts = async (topic: string) => {
-    const url = `/api/igdb/games?topic=${topic}&page=${0}&limit=${30}`
+  const fetchProducts = useCallback(
+    async (topic: string) => {
+      const url = `/api/igdb/games?topic=${topic}&page=${0}&limit=${30}`
 
-    const res = await fetch(url)
+      const res = await fetch(url)
 
-    const result = (await res.json()) as PaginatedResponse<ProductWithGame>
+      const result = (await res.json()) as PaginatedResponse<ProductWithGame>
 
-    populateCache(result.itens)
+      populateCache(result.itens)
 
-    return result.itens
-  }
-
-  useQueries({
-    queries: [
-      'top-rated',
-      'best-sellers',
-      'new-releases',
-      'most-played',
-      'most-wishlisted',
-      'coming-soon',
-    ].map(topic => ({
-      queryKey: ['products', topic],
-      queryFn: () => fetchProducts(topic),
-      staleTime: Number.POSITIVE_INFINITY,
-    })),
-  })
+      return result.itens
+    },
+    [populateCache],
+  )
 
   const { data: products, isPending } = useQuery({
     queryKey: ['products', activeTag],
-    queryFn: (): ProductWithGame[] | undefined => undefined,
+    queryFn: () => fetchProducts(activeTag),
     staleTime: Number.POSITIVE_INFINITY,
-    experimental_prefetchInRender: true,
   })
+
+  const queryClient = useQueryClient()
+
+  useEffect(() => {
+    const prefetchTodos = async () => {
+      const topics = [
+        'top-rated',
+        'best-sellers',
+        'new-releases',
+        'most-played',
+        'most-wishlisted',
+        'coming-soon',
+      ]
+
+      const promises = []
+
+      for (const topic of topics) {
+        const promise = queryClient.prefetchQuery({
+          queryKey: ['products', topic],
+          queryFn: () => fetchProducts(topic),
+        })
+
+        promises.push(promise)
+      }
+
+      await Promise.all(promises)
+    }
+
+    setTimeout(() => {
+      prefetchTodos()
+    }, 4000)
+  }, [fetchProducts, queryClient])
 
   return (
     <section className="w-full py-2 px-0 flex flex-col gap-4">
