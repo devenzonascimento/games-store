@@ -3,15 +3,16 @@ import igdb from 'igdb-api-node'
 import { Game, IGDBRawGame } from '@/types/game'
 import { toGame } from '@/helpers/igdb-game-parser'
 import { Product, ProductWithGame } from '@/types/product'
+import { BASE_URL } from '@/helpers/base-url'
 
 async function fetchToken() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/igdb/auth`)
+  const res = await fetch(`${BASE_URL}/api/igdb/auth`)
   const { access_token } = await res.json()
   return access_token as string
 }
 
 async function getProductByIgdbGameId(igdbGameId: number) {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${igdbGameId}`
+  const url = `${BASE_URL}/api/products/${igdbGameId}`
 
   const res = await fetch(url)
 
