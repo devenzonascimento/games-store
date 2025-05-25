@@ -21,6 +21,20 @@ export enum IGDBPlatform {
   NintendoSwitch = 130,
 }
 
+export const IGDBPlatformNameMap: Record<IGDBPlatform, string> = {
+  [IGDBPlatform.PC]: 'PC',
+  [IGDBPlatform.PlayStation1]: 'PlayStation 1',
+  [IGDBPlatform.PlayStation2]: 'PlayStation 2',
+  [IGDBPlatform.PlayStation3]: 'PlayStation 3',
+  [IGDBPlatform.PlayStation4]: 'PlayStation 4',
+  [IGDBPlatform.PlayStation5]: 'PlayStation 5',
+  [IGDBPlatform.Xbox]: 'Xbox',
+  [IGDBPlatform.Xbox360]: 'Xbox 360',
+  [IGDBPlatform.XboxOne]: 'Xbox One',
+  [IGDBPlatform.XboxSeries]: 'Xbox Series',
+  [IGDBPlatform.NintendoSwitch]: 'Nintendo Switch',
+}
+
 export type IGDBRawGame = {
   id: number
   name: string
