@@ -14,6 +14,8 @@ import { useCartStore } from '@/store/cart-store'
 import { ProductWithGame } from '@/types/product'
 import { formatCurrency } from '@/helpers/format-currency'
 import { productPriceManager } from '@/helpers/product-price-manager'
+import { createOrderAction } from '@/actions/create-order'
+import { toast } from '@/hooks/use-toast'
 
 export function Cart() {
   const {
@@ -25,6 +27,33 @@ export function Cart() {
     isCartOpen,
     closeCart,
   } = useCartStore()
+
+  async function handleCreateOrder() {
+    try {
+      const result = await createOrderAction()
+
+      if (result.success) {
+        toast({
+          title: 'Order created successfully!',
+          description: `Order #${result.orderId} has been created.`,
+        })
+        clearCart()
+        closeCart()
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to create order',
+          description: result.error,
+        })
+      }
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Failed to create order',
+        description: 'Something went wrong',
+      })
+    }
+  }
 
   return (
     <Sheet open={isCartOpen} onOpenChange={closeCart}>
@@ -87,10 +116,13 @@ export function Cart() {
 
             <button
               type="button"
-              className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70"
+              className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg hover:opacity-70 disabled:opacity-50"
+              onClick={handleCreateOrder}
+              // disabled={isGeneratingOrder}
             >
               <BanknoteIcon className="size-6 shrink-0" />
-              Procced to checkout
+              Generate order
+              {/* {isGeneratingOrder ? 'Generating order...' : 'Generate order'} */}
             </button>
           </>
         )}

@@ -16,15 +16,10 @@ export async function GET(req: NextRequest) {
       userId: user.id,
     },
     select: {
-      items: {        
+      items: {
         select: {
           id: true,
-          product: {
-            omit: {
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
+          product: true,
         },
       },
     },
@@ -33,7 +28,7 @@ export async function GET(req: NextRequest) {
   const cartItems = (cartItemsRaw?.items ?? [])?.map(i => {
     return {
       cartItemId: i.id,
-      ...i.product
+      ...i.product,
     }
   })
 
