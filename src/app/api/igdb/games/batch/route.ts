@@ -56,10 +56,7 @@ export async function POST(req: NextRequest) {
     const { ids } = await req.json()
 
     if (!Array.isArray(ids) || ids.length === 0) {
-      return NextResponse.json(
-        { error: 'Invalid request: ids must be a non-empty array' },
-        { status: 400 },
-      )
+      return NextResponse.json([])
     }
 
     if (ids.length > 20) {
