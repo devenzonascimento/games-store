@@ -8,7 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from './ui/sheet'
-import { IGDBPlatform } from '@/types/game'
+import { IGDBPlatform, IGDBPlatformNameMap } from '@/types/game'
 import { PlatformIcon } from './platform-icon'
 import { useCartStore } from '@/store/cart-store'
 import { ProductWithGame } from '@/types/product'
@@ -75,7 +75,8 @@ export function Cart() {
                 <CartItem
                   key={item.cartItemId}
                   product={item as ProductWithGame}
-                  onRemove={() => removeItem(item.id)}
+                  platform={item.platform}
+                  onRemove={() => removeItem(item.id, item.platform)}
                 />
               ))}
             </div>
@@ -141,10 +142,11 @@ export function Cart() {
 
 type CartItemProps = {
   product: ProductWithGame
+  platform: IGDBPlatform
   onRemove: () => void
 }
 
-export function CartItem({ product, onRemove }: CartItemProps) {
+export function CartItem({ product, platform, onRemove }: CartItemProps) {
   const { hasDiscount, discount, originalPrice, finalPrice } =
     productPriceManager(product)
 
@@ -175,12 +177,10 @@ export function CartItem({ product, onRemove }: CartItemProps) {
 
         <div className="flex items-center gap-1">
           <PlatformIcon
-            platform={product.game.platformsAvailable?.[0]}
+            platform={platform}
             className="size-4 text-white fill-white shrink-0"
           />
-          <span className="text-xs">
-            {IGDBPlatform[product.game.platformsAvailable?.[0]]}
-          </span>
+          <span className="text-xs">{IGDBPlatformNameMap[platform]}</span>
         </div>
 
         <div className="mt-auto w-full flex items-center gap-2">

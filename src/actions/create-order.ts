@@ -48,6 +48,7 @@ export async function createOrderAction() {
         price,
         discountType,
         discountValue,
+        platform: item.platform,
       }
     })
 

@@ -12,11 +12,14 @@ import { formatCurrency } from '@/helpers/format-currency'
 import { formatPercentage } from '@/helpers/format-percentage'
 import { ScreenshotCarrousel } from './screenshots-carrousel'
 import { useGoBack } from '@/hooks/use-go-back'
+import { IGDBPlatform } from '@/types/game'
+import { PlatformSelect } from '@/components/platform-select'
+import { useState } from 'react'
 
 export default function ProductPage() {
-  const { goBack } = useGoBack()
   const { id } = useParams()
-  const { openCart, addItem, removeItem, alreadyIntoCart } = useCartStore()
+  const { goBack } = useGoBack()
+  const { items, openCart, addItem, removeItem } = useCartStore()
 
   const { data: product, isPending } = useQuery({
     queryKey: ['game', id],
@@ -29,13 +32,20 @@ export default function ProductPage() {
     },
     staleTime: Number.POSITIVE_INFINITY,
   })
+  const [selectedPlatform, setSelectedPlatform] = useState<IGDBPlatform | null>(
+    null,
+  )
+
+  const alreadyIntoCart = items.some(
+    i => i.id === product?.id && i.platform === selectedPlatform,
+  )
 
   const handleAddItemToCart = () => {
-    if (!product || alreadyIntoCart(product?.id)) {
+    if (!product || alreadyIntoCart || !selectedPlatform) {
       return
     }
 
-    addItem(product)
+    addItem(product, selectedPlatform)
 
     const { dismiss } = toast({
       title: 'Game added to cart!',
@@ -55,11 +65,11 @@ export default function ProductPage() {
   }
 
   const handleRemoveItemToCart = () => {
-    if (!product || !alreadyIntoCart(product?.id)) {
+    if (!product || !alreadyIntoCart || !selectedPlatform) {
       return
     }
 
-    removeItem(product.id)
+    removeItem(product.id, selectedPlatform)
 
     const { dismiss } = toast({
       title: 'Game removed from cart!',
@@ -125,12 +135,25 @@ export default function ProductPage() {
         </div>
 
         <div className="w-full flex flex-col items-center gap-4">
+          <PlatformSelect
+            platforms={product.game.platformsAvailable}
+            onSelect={setSelectedPlatform}
+          />
+
           <button
             type="button"
-            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg sm:hover:opacity-70"
+            disabled={!selectedPlatform}
+            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-zinc-950 bg-white rounded-lg sm:hover:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={async () => {
-              await addItem(product)
-              openCart()
+              if (alreadyIntoCart) {
+                openCart()
+                return
+              }
+
+              if (selectedPlatform) {
+                await addItem(product, selectedPlatform)
+                openCart()
+              }
             }}
           >
             <Gamepad2Icon className="size-6 text-zinc-950 shrink-0" />
@@ -139,9 +162,10 @@ export default function ProductPage() {
 
           <button
             type="button"
-            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-transparent border border-white rounded-lg sm:hover:opacity-70"
+            disabled={!selectedPlatform}
+            className="w-full p-2 flex items-center justify-center gap-2 text-lg font-medium text-white bg-transparent border border-white rounded-lg sm:hover:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => {
-              if (alreadyIntoCart(product.id)) {
+              if (alreadyIntoCart) {
                 handleRemoveItemToCart()
                 return
               }
@@ -150,7 +174,7 @@ export default function ProductPage() {
             }}
           >
             <ShoppingCartIcon className="size-6 shrink-0" />
-            {alreadyIntoCart(product.id) ? 'Remove to cart' : 'Add to cart'}
+            {alreadyIntoCart ? 'Remove to cart' : 'Add to cart'}
           </button>
         </div>
 

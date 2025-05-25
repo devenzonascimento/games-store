@@ -3,10 +3,14 @@ import { UserSummary } from '@/types/user'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
-  const { productId } = await req.json()
+  const { productId, platform } = await req.json()
 
   if (Number.isNaN(productId)) {
     return NextResponse.json({ error: 'Invalid product ID.' }, { status: 400 })
+  }
+
+  if (Number.isNaN(platform)) {
+    return NextResponse.json({ error: 'Invalid platform.' }, { status: 400 })
   }
 
   const result = req.cookies.get('user_summary')
@@ -21,6 +25,7 @@ export async function POST(req: NextRequest) {
     data: {
       cartId: userSummary.cartId,
       productId,
+      platform,
     },
   })
 

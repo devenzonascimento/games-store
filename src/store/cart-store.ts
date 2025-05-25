@@ -1,7 +1,8 @@
+import { IGDBPlatform } from '@/types/game'
 import { DiscountType, ProductWithGame } from '@/types/product'
 import { create } from 'zustand'
 
-type CartItem = ProductWithGame & { cartItemId: number }
+type CartItem = ProductWithGame & { cartItemId: number; platform: IGDBPlatform }
 
 type CartState = {
   isCartOpen: boolean
@@ -10,9 +11,8 @@ type CartState = {
 
   items: CartItem[]
   syncStore: () => void
-  alreadyIntoCart: (productId: number) => boolean
-  addItem: (product: ProductWithGame) => void
-  removeItem: (productId: number) => void
+  addItem: (product: ProductWithGame, selectedPlatform: IGDBPlatform) => void
+  removeItem: (productId: number, selectedPlatform: IGDBPlatform) => void
   clearCart: () => void
   getTotalItems: () => number
   getTotalPrice: () => number
@@ -29,6 +29,10 @@ export const useCartStore = create<CartState>()((set, get) => ({
     const cartItems = (await fetch('/api/cart').then(res =>
       res.json(),
     )) as (Omit<CartItem, 'game'> & { igdbId: number })[]
+
+    if (cartItems.length === 0) {
+      return
+    }
 
     // Exemplo de uso
     const response = await fetch('/api/igdb/games/batch', {
@@ -49,15 +53,17 @@ export const useCartStore = create<CartState>()((set, get) => ({
       return {
         ...p,
         cartItemId: cartItem?.cartItemId ?? 0,
+        platform: cartItem?.platform ?? IGDBPlatform.PC,
       }
     })
 
     set({ items })
   },
-  alreadyIntoCart: productId => get().items.some(i => i.id === productId),
-  addItem: async product => {
+  addItem: async (product, selectedPlatform) => {
     const items = get().items
-    const existingItem = items.find(i => i.id === product.id)
+    const existingItem = items.find(
+      i => i.id === product.id && i.platform === selectedPlatform,
+    )
 
     if (!existingItem) {
       const { id } = (await fetch('/api/cart/add', {
@@ -65,19 +71,24 @@ export const useCartStore = create<CartState>()((set, get) => ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           productId: product.id,
-          platform: product.game.platformsAvailable.at(0),
+          platform: selectedPlatform,
         }),
       }).then(res => res.json())) as { id: number }
 
       if (id) {
         set({
-          items: [...items, { ...product, cartItemId: id }],
+          items: [
+            ...items,
+            { ...product, cartItemId: id, platform: selectedPlatform },
+          ],
         })
       }
     }
   },
-  removeItem: async productId => {
-    const cartItemId = get().items.find(i => i.id === productId)?.cartItemId
+  removeItem: async (productId, selectedPlatform) => {
+    const cartItemId = get().items.find(
+      i => i.id === productId && i.platform === selectedPlatform,
+    )?.cartItemId
 
     const success = (await fetch('/api/cart/remove', {
       method: 'POST',

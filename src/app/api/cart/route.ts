@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
         select: {
           id: true,
           product: true,
+          platform: true,
         },
       },
     },
@@ -28,6 +29,7 @@ export async function GET(req: NextRequest) {
   const cartItems = (cartItemsRaw?.items ?? [])?.map(i => {
     return {
       cartItemId: i.id,
+      platform: i.platform,
       ...i.product,
     }
   })
