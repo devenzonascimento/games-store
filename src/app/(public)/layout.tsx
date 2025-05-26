@@ -14,6 +14,11 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: 'Xtreme Go Horse Games',
   description: 'Games store :)',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 }
 
 export default function RootLayout({
