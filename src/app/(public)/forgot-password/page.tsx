@@ -41,6 +41,7 @@ export default async function ForgotPasswordPage({
           Icon={MailIcon}
           required
           minLength={5}
+          helpMessage="Enter a valid email address"
         />
 
         {success && (

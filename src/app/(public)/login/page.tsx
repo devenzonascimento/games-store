@@ -37,6 +37,7 @@ export default async function LoginPage(props: LoginPageProps) {
           Icon={MailIcon}
           required
           minLength={5}
+          helpMessage="Enter a valid email address"
         />
 
         <Input
@@ -46,7 +47,6 @@ export default async function LoginPage(props: LoginPageProps) {
           autoComplete="current-password"
           Icon={LockKeyholeIcon}
           required
-          minLength={6}
         />
 
         {error && (

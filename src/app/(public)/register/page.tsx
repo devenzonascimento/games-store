@@ -49,6 +49,7 @@ export default function RegisterPage() {
           Icon={UserIcon}
           required
           minLength={3}
+          helpMessage="Enter your full name (at least 3 characters)"
         />
 
         <Input
@@ -59,6 +60,7 @@ export default function RegisterPage() {
           Icon={MailIcon}
           required
           minLength={5}
+          helpMessage="Enter a valid email address"
         />
 
         <Input
@@ -69,6 +71,7 @@ export default function RegisterPage() {
           required
           pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}"
           maxLength={14}
+          helpMessage="Enter your CPF (format: 000.000.000-00)"
         />
 
         <Input
@@ -77,7 +80,9 @@ export default function RegisterPage() {
           placeholder="Phone"
           Icon={PhoneIcon}
           pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}"
+          required
           maxLength={15}
+          helpMessage="Enter your phone number (format: (00) 00000-0000)"
         />
 
         <Input
@@ -88,6 +93,7 @@ export default function RegisterPage() {
           Icon={LockKeyholeIcon}
           required
           minLength={6}
+          helpMessage="Password must contain at least 6 characters"
         />
 
         <Input
@@ -98,6 +104,7 @@ export default function RegisterPage() {
           Icon={LockKeyholeIcon}
           required
           minLength={6}
+          helpMessage="Repeat your password"
         />
 
         {state?.error && (
